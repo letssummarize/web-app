@@ -9,7 +9,6 @@ import Text from "./Typography/Text";
 function PromptSection({ promptBoxType }: { promptBoxType: PromptBoxType }) {
 	const handleSubmit = () => { };
 
-	// Find the correct data for this prompt type
 	const promptData = promptSectionData.find(item => item.type === promptBoxType);
 
 	return (

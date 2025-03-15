@@ -1,27 +1,28 @@
-import { metadata } from "./metadata";
+
+import { metaData } from "./metaData";
 import { NavbarData } from "./types/navbar";
 
 export const navbarData: NavbarData = {
   menu: [
     {
       name: 'Summarize Videos',
-      href: '/videos',
+      href: '/prompt/video',
       icon: 'youtube',
     },
     {
       name: 'Summarize Text',
-      href: '/text',
+      href: '/prompt/text',
       icon: 'text',
     },
     {
       name: 'Summarize PDF',
-      href: '/pdf',
+      href: '/prompt/document',
       icon: 'document',
     },
   ],
   logo: {
         link: '/',
-        alt: `${metadata.title} logo`,
+        alt: `${metaData.title} logo`,
         src: '/images/logo.png',
   },
   secondaryMenu: [

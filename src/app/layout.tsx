@@ -4,6 +4,7 @@ import "./globals.css";
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
+import { metaData } from "@/data/metaData";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -17,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Let's Summarize",
-  description: "AI-powered text summarization tool for YouTube videos, articles, and PDF documents.",
+  title: metaData.title,
+  description: metaData.description,
 };
 
 export default function RootLayout({

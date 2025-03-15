@@ -1,5 +1,4 @@
-export interface Metadata {
+export interface MetaData {
     title: string;
     description: string;
-    keywords?: string[];
 }

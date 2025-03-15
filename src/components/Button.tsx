@@ -31,7 +31,7 @@ const Button = ({
     className
   ].filter(Boolean).join(' ');
 
-  const iconSize = size === 'lg' ? 'w-5' : size === 'sm' ? 'w-4' : 'w-6';
+  const iconSize = size === 'lg' ? 'w-5' : size === 'md' ? 'w-4' : 'w-4';
 
   return (
     <button {...props} className={classes}>
