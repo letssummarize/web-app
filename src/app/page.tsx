@@ -1,9 +1,9 @@
-import HomePage from "./components/Homepage/page";
+import Container from "@/components/Container";
 
 export default function Home() {
   return (
-    <div className="">
-      <HomePage/>
-    </div>
+    <Container>
+      Test
+    </Container>
   );
 }
