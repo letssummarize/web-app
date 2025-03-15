@@ -1,13 +1,13 @@
-import { navbarData } from "@/data/navbar";
-import Container from "../Container";
-import Logo from "../Logo";
-import NavbarMenu from "./NavbarMenu";
+import { navbarData } from '@/data/navbar';
+import Container from '../Container';
+import Logo from '../Logo';
+import NavbarMenu from './NavbarMenu';
 
 const Navbar = () => {
   return (
-    <nav className="py-8">
-      <Container classNames="flex justify-between items-center" wide>
-        <div className="flex items-center space-x-12">
+    <nav className='py-8'>
+      <Container classNames='flex justify-between items-center' wide>
+        <div className='flex items-center space-x-12'>
           {/* Logo */}
           <Logo {...navbarData.logo} />
 

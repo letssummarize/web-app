@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../Button';
 import UrlInput from './UrlInput';
 import Textarea from './Textarea';
@@ -12,15 +12,20 @@ interface PromptBoxProps {
   onSubmit: (url: string) => void;
   className?: string;
   type: PromptBoxType;
+  value?: string;
 }
 
-function PromptBox({ onSubmit, type, className = '' }: PromptBoxProps) {
-  const [url, setUrl] = useState('');
+function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
+  const [input, setInput] = useState(value);
+
+  useEffect(() => {
+    setInput(value);
+  }, [value]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (url.trim()) {
-      onSubmit(url.trim());
+    if (input.trim()) {
+      onSubmit(input.trim());
     }
   };
 
@@ -28,29 +33,35 @@ function PromptBox({ onSubmit, type, className = '' }: PromptBoxProps) {
 
   return (
     <div className={`w-full ${className}`}>
-      <form onSubmit={handleSubmit} className="relative w-full">
-        <div className={`relative flex items-center w-full overflow-hidden bg-gradient-to-r from-[#D8775F] via-[#A02B66] to-[#3E15BA] p-[1px] shadow-[0px_0px_50px_0px_rgba(183,75,99,0.4)] ${roundedClassName}`}>
-          <div className={`w-full bg-[#0C0C0C] flex ${type === 'text' ? 'flex-col items-end' : 'items-center'} gap-3 ${roundedClassName}`}>
-            {type === 'url' && <UrlInput url={url} setUrl={setUrl} />}
+      <form onSubmit={handleSubmit} className='relative w-full'>
+        <div
+          className={`relative flex items-center w-full overflow-hidden bg-gradient-to-r from-[#D8775F] via-[#A02B66] to-[#3E15BA] p-[1px] shadow-[0px_0px_50px_0px_rgba(183,75,99,0.4)] ${roundedClassName}`}
+        >
+          <div
+            className={`w-full bg-[#0C0C0C] flex ${
+              type === 'text' ? 'flex-col items-end' : 'items-center'
+            } gap-3 ${roundedClassName}`}
+          >
+            {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
             {type === 'text' && <Textarea />}
             {type === 'upload' && <UploadBox />}
 
-            {(type === 'text' || type === 'url') &&
+            {(type === 'text' || type === 'url') && (
               <Button
-                type="submit"
-                label="Summarize"
-                icon="ai"
-                variant="gradient"
+                type='submit'
+                label='Summarize'
+                icon='ai'
+                variant='gradient'
                 radius={type === 'url' ? 'full' : 'default'}
                 size={type === 'url' ? 'lg' : 'md'}
                 className={`${type === 'text' ? 'mr-2 mb-2' : 'mr-2'}`}
               />
-            }
+            )}
           </div>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default PromptBox;
