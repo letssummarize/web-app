@@ -20,6 +20,8 @@ const Button = ({
 }: ButtonProps) => {
   const classes = [
     'cursor-pointer flex items-center gap-2',
+    variant === 'default' &&
+      'bg-gray-100 text-black font-medium',
     variant === 'gradient' &&
       'bg-gradient-to-r from-[#3e15ba] via-[#a02b66] to-[#d8775f] text-white font-light',
     variant === 'ghost' && 'bg-transparent border-0 text-white font-light',
