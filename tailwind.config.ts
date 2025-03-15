@@ -5,11 +5,14 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
-        primary: 'var( --primary-color)',
+        primary: 'var(--primary-color)',
         secondary: 'var(--secondary-color)',
         third: 'var(--third-color)',
       },

@@ -11,7 +11,7 @@ function Logo({ src, alt, link }: Logo) {
     return (
         <Link href={link} className="flex items-center space-x-2">
             <div className="relative">
-                <Image src={src} alt={alt} width={167} height={40} />
+                <Image src={src} alt={alt} width={133} height={32} />
             </div>
         </Link>
     )

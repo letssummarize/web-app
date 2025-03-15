@@ -1,5 +1,5 @@
-import { getIconComponent } from "@/util/getIconComponent";
 import Container from "./Container";
+import Icon from "./Icon/Icon";
 
 const Footer = () => {
   return (
@@ -16,7 +16,7 @@ const Footer = () => {
           className="text-sm font-light flex items-center space-x-2 border-b pb-1"
         >
           <span>Explore our repository on</span>
-          {getIconComponent({ icon: "github", props: { className: "w-5 h-auto opacity-80" } })}
+          {<Icon icon='github' props={{ className: `w-5 h-auto opacity-80` }} />}
           <span>Github</span>
         </a>
       </Container>

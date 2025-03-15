@@ -8,9 +8,9 @@ export interface NavbarMenu {
 function NavbarMenu({ items, secondary = false }: NavbarMenu) {
     return (
         <ul className={`hidden md:flex items-center ${secondary ? 'space-x-8' : 'space-x-10'} text-base`}>
-            {items.map((item) => (
+            {items.map((item, index) => (
                 <NavbarMenuItem
-                    key={item.name}
+                    key={index}
                     name={item.name}
                     href={item.href}
                     icon={item.icon}
