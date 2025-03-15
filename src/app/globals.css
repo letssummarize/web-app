@@ -7,7 +7,7 @@
   --primary-color: #a02b66;
   --secondary-color: #3e15ba;
   --third-color: #d8775f;
-  --border-color: rgba(255, 255, 255, 0.15);
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {

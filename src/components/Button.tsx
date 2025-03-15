@@ -21,7 +21,7 @@ const Button = ({
   const classes = [
     "cursor-pointer flex items-center gap-2",
     variant === 'gradient' && "bg-gradient-to-r from-[#3e15ba] via-[#a02b66] to-[#d8775f] text-white",
-    variant === 'ghost' && "bg-transparent border-0 text-white hover:underline",
+    variant === 'ghost' && "bg-transparent border-0 text-white",
     variant !== 'ghost' && (radius === 'full' ? "rounded-full" : "rounded-[5px]"),
     variant !== 'ghost' && {
       sm: "px-3 py-1.5 text-sm",
@@ -31,7 +31,7 @@ const Button = ({
     className
   ].filter(Boolean).join(' ');
 
-  const iconSize = size === 'lg' ? 'w-6' : size === 'sm' ? 'w-5' : 'w-6';
+  const iconSize = size === 'lg' ? 'w-5' : size === 'sm' ? 'w-4' : 'w-6';
 
   return (
     <button {...props} className={classes}>

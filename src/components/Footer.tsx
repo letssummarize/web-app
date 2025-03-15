@@ -1,5 +1,5 @@
 import Container from "./Container";
-import Icon from "./Icon/Icon";
+import Github from "./Icon/Github";
 
 const Footer = () => {
   return (
@@ -16,7 +16,7 @@ const Footer = () => {
           className="text-sm font-light flex items-center space-x-2 border-b pb-1"
         >
           <span>Explore our repository on</span>
-          {<Icon icon='github' props={{ className: `w-5 h-auto opacity-80` }} />}
+          <Github className={`w-5 h-auto opacity-80`} />
           <span>Github</span>
         </a>
       </Container>

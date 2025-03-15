@@ -3,9 +3,10 @@ import Api from "@/components/Icon/Api";
 import Document from "@/components/Icon/Document";
 import Github from "@/components/Icon/Github";
 import Text from "@/components/Icon/Text";
-import { IconName, SvgIconProps } from "@/components/icon/types/icon";
 import YouTube from "@/components/Icon/Youtube";
 import AI from './AI';
+import { IconName, SvgIconProps } from './types/icon';
+import Filter from './Filter';
 
 function Icon({ icon, props }: { icon: IconName; props?: SvgIconProps }) {
     switch (icon) {
@@ -21,6 +22,8 @@ function Icon({ icon, props }: { icon: IconName; props?: SvgIconProps }) {
             return <Api {...props} />;
         case 'ai':
             return <AI {...props} />;
+        case 'filter':
+            return <Filter {...props} />
         default:
             return null;
     }
