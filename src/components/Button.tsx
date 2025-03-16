@@ -1,5 +1,5 @@
 import Icon from './Icon/Icon';
-import { IconName } from './Icon/types/icon';
+import { IconName } from './Icon/types/Icon';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconName;

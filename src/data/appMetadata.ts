@@ -1,6 +1,6 @@
-import { MetaData } from "./types/metadata";
+import { AppMetaData } from "./types/appMetadata";
 
-export const metaData: MetaData = {
+export const appMetaData: AppMetaData = {
   title: "Let's Summarize",
   description: 'AI-powered text summarization tool for YouTube videos, articles, and documents.',
 };

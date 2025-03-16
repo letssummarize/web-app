@@ -5,7 +5,7 @@ import Github from '@/components/Icon/Github';
 import Text from '@/components/Icon/Text';
 import YouTube from '@/components/Icon/Youtube';
 import AI from './AI';
-import { IconName, SvgIconProps } from './types/icon';
+import { IconName, SvgIconProps } from './types/Icon';
 import Filter from './Filter';
 import Sound from './Sound';
 

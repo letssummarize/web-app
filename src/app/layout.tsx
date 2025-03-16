@@ -4,7 +4,7 @@ import './globals.css';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer';
-import { metaData } from '@/data/metaData';
+import { appMetaData } from '@/data/appMetadata';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: metaData.title,
-  description: metaData.description,
+  title: appMetaData.title,
+  description: appMetaData.description,
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-export interface MetaData {
+export interface AppMetaData {
     title: string;
     description: string;
 }

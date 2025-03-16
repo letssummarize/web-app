@@ -1,5 +1,5 @@
 
-import { metaData } from "./metaData";
+import { appMetaData } from "./appMetadata";
 import { NavbarData } from "./types/navbar";
 
 export const navbarData: NavbarData = {
@@ -22,7 +22,7 @@ export const navbarData: NavbarData = {
   ],
   logo: {
         link: '/',
-        alt: `${metaData.title} logo`,
+        alt: `${appMetaData.title} logo`,
         src: '/images/logo.png',
   },
   secondaryMenu: [

@@ -1,4 +1,4 @@
-import { SvgIconProps } from './types/icon';
+import { SvgIconProps } from './types/Icon';
 
 function Github({ ...props }: SvgIconProps) {
   return (

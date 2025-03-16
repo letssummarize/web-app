@@ -1,5 +1,5 @@
 import Icon from './Icon/Icon';
-import { IconName } from './Icon/types/icon';
+import { IconName } from './Icon/types/Icon';
 import Heading from './Typography/Heading';
 import Text from './Typography/Text';
 
