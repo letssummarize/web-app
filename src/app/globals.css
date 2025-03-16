@@ -1,20 +1,21 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
 
 :root {
-  --background: #161616;
-  --foreground: #fefefe;
+  --background-color: #161616;
+  --text-color: #fefefe;
+  --primary-color: #a02b66;
+  --secondary-color: #3e15ba;
+  --third-color: #d8775f;
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply bg-[var(--background-color)] text-[var(--text-color)];
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  * {
+    @apply border-[var(--border-color)];
+  }
 }
