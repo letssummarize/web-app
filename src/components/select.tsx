@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { IconName } from '@/components/Icon/types/icon';
+import { IconName } from '@/components/Icon/types/Icon';
 import ChevronDown from './Icon/ChevronDown';
 import Icon from './Icon/Icon';
 

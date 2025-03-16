@@ -1,4 +1,4 @@
-export interface SvgIconProps extends React.SVGProps<SVGSVGElement> {}
+export type SvgIconProps = React.SVGProps<SVGSVGElement>;
 
 export type IconName =
   | 'document'

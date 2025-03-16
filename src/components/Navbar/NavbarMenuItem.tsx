@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Icon from '../Icon/Icon';
-import { IconName } from '../Icon/types/icon';
+import { IconName } from '../Icon/types/Icon';
 
 export interface NavbarMenuItemProps {
   name: string;

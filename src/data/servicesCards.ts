@@ -1,4 +1,4 @@
-import { ServicesCardsData } from './types/servicesCards';
+import { ServicesCardsData } from "./types/servicesCards";
 
 export const servicesCardsData: ServicesCardsData[] = [
   {

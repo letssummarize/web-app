@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className='py-8'>
       <Container classNames='flex justify-between items-center' wide>
         <span className='text-sm font-light'>
-          © 2025 <strong className='font-semibold'>Let's Summarize</strong>
+          © 2025 <strong className='font-semibold'>Let&apos;s Summarize</strong>
         </span>
 
         <a
