@@ -9,7 +9,7 @@ function Text({ children, className, center }: TextProps) {
     <p
       className={`text-base font-light ${
         center ? 'text-center' : ''
-      } ${className || ''}`}
+      } ${className || 'max-md:text-[20px] max-sm:text-[12px]'}`}
     >
       {children}
     </p>

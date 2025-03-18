@@ -11,4 +11,6 @@ export type IconName =
   | 'sound'
   | 'restart'
   | 'resume'
-  | 'pause';
+  | 'pause'
+  | 'menu'
+  | 'close';

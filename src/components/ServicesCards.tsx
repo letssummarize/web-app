@@ -13,7 +13,7 @@ function ServicesCards({ exclude }: ServicesCardsProps) {
       <Heading level='h2' center className='mb-8'>
         Need to Summarize Texts or Documents?
       </Heading>
-      <div className='grid grid-cols-2 gap-8'>
+      <div className='grid grid-cols-2 gap-8 max-sm:grid-cols-1 max-sm:gap-6'>
         {servicesCardsData
           .filter((card) => card.icon !== exclude)
           .map((card, index) => (
