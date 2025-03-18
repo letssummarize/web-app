@@ -82,7 +82,7 @@ function PromptBox({
                 radius={type === 'url' ? 'full' : 'default'}
                 size={type === 'url' ? 'lg' : 'md'}
                 className={`${
-                  type === 'text' ? 'mr-2' : type === 'url' ? 'mr-2 mb-2' : ''
+                  type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-2' : ''
                 }`}
               />
             )}
