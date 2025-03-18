@@ -19,3 +19,6 @@
     @apply border-[var(--border-color)];
   }
 }
+code:not(pre code) {
+  @apply px-1.5 py-0.5 rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30;
+}
