@@ -1,6 +1,6 @@
 import Text from '../Typography/Text';
 import ReactMarkdown from 'react-markdown';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 
 interface SummaryContentProps {
@@ -9,18 +9,56 @@ interface SummaryContentProps {
 
 type ComponentType = {
   children?: ReactNode;
+  node?: any;
+  className?: string;
   [key: string]: any;
 };
 
-function SummaryContent({ text }: SummaryContentProps) {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+interface CodeElementProps {
+  children: string;
+  className?: string;
+}
 
-  const handleCopyCode = (code: string, index: number) => {
-    navigator.clipboard.writeText(code).then(() => {
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    });
-  };
+function SummaryContent({ text }: SummaryContentProps) {
+  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+
+  const handleCopyCode = useCallback((code: string, index: string) => {
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+      })
+      .catch((err) => console.error('Failed to copy text: ', err));
+  }, []);
+
+  // const testMarkdown = `
+  // # Heading 1
+  // ## Heading 2
+  // ### Heading 3
+
+  // This is a paragraph with **bold** and *italic* text.
+
+  // - Unordered list item 1
+  // - Unordered list item 2
+
+  // 1. Ordered list item 1
+  // 2. Ordered list item 2
+
+  // > This is a blockquote
+
+  // \`\`\`js
+  // console.log("This is a code block");
+  // const x = 10;
+  // function hello() {
+  //   return "Hello, world!";
+  // }
+  // \`\`\`
+
+  // This is an \`inline code\` example.
+
+  // [This is a link](https://example.com)
+  // `;
 
   return (
     <div className='flex flex-col gap-6'>
@@ -53,37 +91,51 @@ function SummaryContent({ text }: SummaryContentProps) {
             </blockquote>
           ),
           pre: ({ children }: ComponentType) => {
-            const codeContent =
-              (children as any)?.[0]?.props?.children?.[0] || '';
-            const index = Math.random();
+            const codeElement =
+              children as React.ReactElement<CodeElementProps>;
+            const codeContent = codeElement?.props?.children || '';
+            const languageClass = codeElement?.props?.className || '';
+            const index = btoa(codeContent).substring(0, 10);
 
             return (
               <div className='relative group'>
                 <pre className='rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-4 mb-4 overflow-x-auto'>
-                  <code className='font-mono text-sm'>{children}</code>
+                  <code className={`font-mono text-sm ${languageClass}`}>
+                    {codeContent}
+                  </code>
                 </pre>
                 <button
                   onClick={() => handleCopyCode(codeContent, index)}
-                  className='absolute top-3 right-3 px-2 py-1 text-xs rounded bg-gray-700/50 text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity'
+                  className='absolute top-3 right-3 px-2 py-1 text-xs rounded bg-gray-700/50 text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer'
                 >
-                  {copiedIndex === index ? 'Copied!' : 'Copy'}
+                  {copiedIndex === index ? 'Copied!' : 'Copy code'}
                 </button>
               </div>
             );
           },
-          code: ({ children }: ComponentType) => {
-            return <code className='font-mono text-sm'>{children}</code>;
+          code: ({ inline, children }: ComponentType) => {
+            if (inline) {
+              return (
+                <code className='font-mono text-sm bg-gray-700/30 px-1 py-0.5 rounded'>
+                  {children}
+                </code>
+              );
+            }
+            return children;
           },
           a: ({ href, children }: ComponentType) => (
             <a
               href={href}
               className='text-blue-400 hover:text-blue-300 underline'
+              target='_blank'
+              rel='noopener noreferrer'
             >
               {children}
             </a>
           ),
         }}
       >
+        {/* {testMarkdown} */}
         {text}
       </ReactMarkdown>
     </div>
