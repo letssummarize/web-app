@@ -1,7 +1,7 @@
 import Button from '../Button';
 import WordCount from '../WordCount';
 
-function SummaryFooter({ content }: { content: string }) {
+function SummaryFooter({ contentToCountItsWords }: { contentToCountItsWords: string }) {
   return (
     <div className='flex items-center justify-between'>
       <Button
@@ -11,7 +11,7 @@ function SummaryFooter({ content }: { content: string }) {
         label='Read aloud'
         icon='sound'
       />
-      {content && <WordCount text={content} />}
+      {contentToCountItsWords && <WordCount text={contentToCountItsWords} />}
     </div>
   );
 }

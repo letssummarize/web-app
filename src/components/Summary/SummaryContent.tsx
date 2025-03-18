@@ -5,7 +5,19 @@ interface SummaryContentProps {
 }
 
 function SummaryContent({ text }: SummaryContentProps) {
-  return <Text className='leading-8'>{text}</Text>;
+  const paragraphs = text
+    .split('\n')
+    .filter((paragraph) => paragraph.trim() !== '');
+
+  return (
+    <div className='flex flex-col gap-6'>
+      {paragraphs.map((paragraph, index) => (
+        <Text key={index} className='leading-8 mb-4'>
+          {paragraph}
+        </Text>
+      ))}
+    </div>
+  );
 }
 
 export default SummaryContent;

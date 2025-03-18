@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer';
 import { appMetaData } from '@/data/appMetadata';
+import { SummaryProvider } from '@/context/SummaryProvider';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -18,8 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: appMetaData.title,
-  description: appMetaData.description,
+  title: "Let's Summarize",
+  description:
+    'AI-powered text summarization tool for YouTube videos, articles, and documents.',
 };
 
 export default function RootLayout({
@@ -42,7 +44,7 @@ export default function RootLayout({
         />
         <div className='relative z-1 h-full flex flex-col space-y-[160px]'>
           <Navbar />
-          {children}
+          <SummaryProvider>{children}</SummaryProvider>
           <Footer />
         </div>
       </body>
