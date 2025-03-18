@@ -13,15 +13,23 @@ export type PromptBoxType = 'url' | 'text' | 'upload';
 
 interface PromptBoxProps {
   onSubmit: (url: string) => void;
+  onFileUpload?: (file: File) => void;
   className?: string;
   type: PromptBoxType;
   value?: string;
 }
 
-function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
+function PromptBox({
+  onSubmit,
+  onFileUpload,
+  type,
+  className,
+  value = '',
+}: PromptBoxProps) {
   const { options, setOptions } = useSummary();
   const [showCustomization, setShowCustomization] = useState(false);
   const [input, setInput] = useState(value);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     setInput(value);
@@ -29,9 +37,15 @@ function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim()) {
+    if (type === 'upload' && selectedFile) {
+      onFileUpload?.(selectedFile);
+    } else if (input.trim()) {
       onSubmit(input.trim());
     }
+  };
+
+  const handleFileSelected = (file: File) => {
+    setSelectedFile(file);
   };
 
   const roundedClassName = type === 'url' ? 'rounded-full' : 'rounded-[15px]';
@@ -46,14 +60,20 @@ function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
         >
           <div
             className={`w-full bg-[#0C0C0C] flex ${
-              type === 'text' ? 'flex-col items-end' : 'items-center'
-            } gap-3 ${roundedClassName}`}
+              type === 'url'
+                ? 'items-center'
+                : type === 'text'
+                ? 'flex-col items-end'
+                : 'flex-col items-center'
+            } gap-3 ${roundedClassName} ${type === 'upload' ? 'p-10' : ''}`}
           >
             {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
             {type === 'text' && <Textarea value={input} onChange={setInput} />}
-            {type === 'upload' && <UploadBox />}
+            {type === 'upload' && (
+              <UploadBox onFileSelected={handleFileSelected} />
+            )}
 
-            {(type === 'text' || type === 'url') && (
+            {(type !== 'upload' || selectedFile) && (
               <Button
                 type='submit'
                 label='Summarize'
@@ -61,7 +81,9 @@ function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
                 variant='gradient'
                 radius={type === 'url' ? 'full' : 'default'}
                 size={type === 'url' ? 'lg' : 'md'}
-                className={`${type === 'text' ? 'mr-2 mb-2' : 'mr-2'}`}
+                className={`${
+                  type === 'text' ? 'mr-2' : type === 'url' ? 'mr-2 mb-2' : ''
+                }`}
               />
             )}
           </div>

@@ -13,7 +13,7 @@ export const promptSectionData: PromptSectionData[] = [
   },
   {
     type: 'upload',
-    title: 'Summarize PDF Documents',
+    title: 'Summarize Documents',
     description: 'Effortlessly summarize documents with AI.',
   },
 ];

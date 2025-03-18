@@ -18,7 +18,8 @@ function PromptSection({
   value,
   showHeading = true,
 }: PromptSectionProps) {
-  const { summarizeVideo, summarizeText, isLoading, error } = useSummary();
+  const { summarizeVideo, summarizeText, summarizeDoc, isLoading, error } =
+    useSummary();
 
   const handleSubmit = (input: string) => {
     if (promptBoxType === 'url') {
@@ -26,6 +27,10 @@ function PromptSection({
     } else if (promptBoxType === 'text') {
       summarizeText(input);
     }
+  };
+
+  const handleFileUpload = (file: File) => {
+    summarizeDoc(file);
   };
 
   const promptData = promptSectionData.find(
@@ -46,7 +51,12 @@ function PromptSection({
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <PromptBox onSubmit={handleSubmit} type={promptBoxType} value={value} />
+        <PromptBox
+          onSubmit={handleSubmit}
+          onFileUpload={handleFileUpload}
+          type={promptBoxType}
+          value={value}
+        />
       )}
 
       {error && <div className='text-red-500 mt-4'>Error: {error}</div>}

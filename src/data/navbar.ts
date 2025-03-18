@@ -15,7 +15,7 @@ export const navbarData: NavbarData = {
       icon: 'text',
     },
     {
-      name: 'Summarize PDF',
+      name: 'Summarize Document',
       href: '/prompt/document',
       icon: 'document',
     },
