@@ -1,9 +1,10 @@
 import { servicesCardsData } from '@/data/servicesCards';
 import Card from './Card';
 import Heading from './Typography/Heading';
+import { SummaryType } from '@/api/types/api';
 
 interface ServicesCardsProps {
-  exclude: 'youtube' | 'document' | 'text';
+  exclude: SummaryType;
 }
 
 function ServicesCards({ exclude }: ServicesCardsProps) {

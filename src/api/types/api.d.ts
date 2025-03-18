@@ -1,14 +1,29 @@
-export type SummaryType = 'video' | 'text' | 'file';
+import {
+  SummaryFormat,
+  SummaryLength,
+  SummaryModel,
+  SummarySpeed,
+} from '../enums/api.enums';
+
+export type SummaryType = 'youtube' | 'text' | 'document';
 export type documentTypes = 'pdf' | 'docx' | 'txt';
 
 export interface SummaryOptions {
   length?: SummaryLength;
   format?: SummaryFormat;
+  model?: SummaryModel;
+  speed?: SummarySpeed;
 }
 
 export interface SummaryResponse {
-  summary: {
-    transcript?: string;
-    summary: string;
-  };
+  transcript?: string;
+  text?: string;
+  summary: string;
+  videoMetadata?: YoutubeVideoMetadata;
+}
+
+export interface YoutubeVideoMetadata {
+  thumbnail: string | null;
+  title: string | null;
+  channelName: string | null;
 }

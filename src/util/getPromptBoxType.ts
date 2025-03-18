@@ -3,9 +3,9 @@ import { PromptBoxType } from '@/components/PromptBox/PromptBox';
 
 export function getPromptBoxType(sourceType: SummaryType): PromptBoxType {
   switch (sourceType) {
-    case 'video':
+    case 'youtube':
       return 'url';
-    case 'file':
+    case 'document':
       return 'upload';
     case 'text':
       return 'text';

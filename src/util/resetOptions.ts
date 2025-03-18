@@ -1,4 +1,4 @@
-import { SummaryFormat, SummaryLength } from '@/api/enums/api.enums';
+import { SummaryFormat, SummaryLength, SummaryModel, SummarySpeed } from '@/api/enums/api.enums';
 import { SummaryOptions } from '@/api/types/api';
 
 export function resetOptions(
@@ -7,5 +7,7 @@ export function resetOptions(
   setOptions({
     length: SummaryLength.STANDARD,
     format: SummaryFormat.DEFAULT,
+    model: SummaryModel.DEFAULT,
+    speed: SummarySpeed.DEFAULT,
   });
 }

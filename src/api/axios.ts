@@ -1,10 +1,11 @@
 import getApiBaseUrl from '@/util/getApiBaseUrl';
 import { Logger } from '@/util/logger';
 import axios from 'axios';
+import { SummaryModel } from '@/api/enums/api.enums';
 
 const log = Logger();
 
-const createAxiosInstance = (contentType = 'application/json') => {
+const createAxiosInstance = (contentType = 'application/json', model: SummaryModel = SummaryModel.DEFAULT) => {
   const instance = axios.create({
     baseURL: getApiBaseUrl(),
     headers: { 'Content-Type': contentType },
@@ -13,7 +14,7 @@ const createAxiosInstance = (contentType = 'application/json') => {
 
   instance.interceptors.request.use(
     (config) => {
-      const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+      const apiKey = model === SummaryModel.OPENAI ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
       if (apiKey) {
         config.headers.Authorization = `Bearer ${apiKey}`;
       } else {
@@ -30,6 +31,10 @@ const createAxiosInstance = (contentType = 'application/json') => {
 
   instance.interceptors.response.use(
     (response) => {
+      log.info(`✅ API Response: ${response.status}`, {
+        data: response.data,
+        headers: response.headers,
+      });
       return response;
     },
     (error) => {

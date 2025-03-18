@@ -2,9 +2,9 @@ import { SummaryType } from '@/api/types/api';
 
 export function getPromptRoute(sourceType: SummaryType): string {
   switch (sourceType) {
-    case 'video':
+    case 'youtube':
       return '/prompt/video';
-    case 'file':
+    case 'document':
       return '/prompt/document';
     case 'text':
       return '/prompt/text';

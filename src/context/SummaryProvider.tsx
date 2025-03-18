@@ -1,9 +1,9 @@
 'use client';
 
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import { SummaryOptions, SummaryResponse, SummaryType } from '@/api/types/api';
+import { SummaryOptions, SummaryResponse } from '@/api/types/api';
 import { useRouter } from 'next/navigation';
-import { SummaryFormat, SummaryLength } from '@/api/enums/api.enums';
+import { SummaryFormat, SummaryLength, SummaryModel, SummarySpeed } from '@/api/enums/api.enums';
 import {
   proceedSummarizeDoc,
   proceedSummarizeText,
@@ -15,17 +15,17 @@ import { checkApiKey } from '@/util/checkApiKey';
 import { Logger } from '@/util/logger';
 import { getLocalStorageKeys } from '@/util/getLocalStorageKeys';
 import { saveOptions } from '@/util/saveOptions';
-import { saveSummary } from '@/util/saveSummary';
 import { saveSourceContent, SourceContent } from '@/util/saveSourceContent';
 import { clearLocalStorage } from '@/util/clearLocalStorage';
 import { resetOptions } from '@/util/resetOptions';
+import { saveData } from '@/util/saveData';
 
 const log = Logger();
 
 interface SummaryContextType {
   isLoading: boolean;
   error: string | null;
-  summary: SummaryResponse | null;
+  data: SummaryResponse | null;
   options: SummaryOptions;
   setOptions: (options: SummaryOptions) => void;
   summarizeVideo: (url: string) => Promise<void>;
@@ -45,13 +45,15 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [summary, setSummary] = useState<SummaryResponse | null>(null);
+  const [data, setData] = useState<SummaryResponse | null>(null);
   const [sourceContent, setSourceContent] = useState<SourceContent | null>(
     null
   );
   const [options, setOptions] = useState<SummaryOptions>({
     length: SummaryLength.STANDARD,
-    format: SummaryFormat.NARRATIVE,
+    format: SummaryFormat.DEFAULT,
+    model: SummaryModel.DEFAULT,
+    speed: SummarySpeed.DEFAULT,
   });
   const [hasLoadedFromStorage, setHasLoadedFromStorage] = useState(false);
 
@@ -62,15 +64,15 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
     try {
       let hasLoadedAny = false;
 
-      const savedSummary = localStorage.getItem(LOCAL_STORAGE_KEYS.SUMMARY);
+      const savedSummary = localStorage.getItem(LOCAL_STORAGE_KEYS.DATA);
       if (savedSummary) {
         try {
           const parsedSummary = JSON.parse(savedSummary);
-          setSummary(parsedSummary);
+          setData(parsedSummary);
           hasLoadedAny = true;
         } catch (parseErr) {
-          log.error('Failed to parse summary from localStorage:', parseErr);
-          localStorage.removeItem(LOCAL_STORAGE_KEYS.SUMMARY);
+          log.error('Failed to parse data from localStorage:', parseErr);
+          localStorage.removeItem(LOCAL_STORAGE_KEYS.DATA);
         }
       }
 
@@ -118,9 +120,9 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (hasLoadedFromStorage) {
-      saveSummary(summary);
+      saveData(data);
     }
-  }, [summary, hasLoadedFromStorage]);
+  }, [data, hasLoadedFromStorage]);
 
   useEffect(() => {
     if (hasLoadedFromStorage) {
@@ -129,9 +131,9 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
   }, [sourceContent, hasLoadedFromStorage]);
 
   const clearSummary = () => {
-    log.info('Clearing summary state and localStorage');
+    log.info('Clearing data state and localStorage');
 
-    setSummary(null);
+    setData(null);
     setError(null);
     setSourceContent(null);
     resetOptions(setOptions);
@@ -143,16 +145,16 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsLoading(true);
       setError(null);
-      setSourceContent({ type: 'video', content: url });
+      setSourceContent({ type: 'youtube', content: url });
 
-      if (!checkApiKey()) {
+      if (!checkApiKey(options.model)) {
         throw new Error(
           'API key is missing. Please check your environment configuration.'
         );
       }
 
       const result = await proceedSummarizeVideo(url, options);
-      setSummary(isSummaryResponseValid(result));
+      setData(isSummaryResponseValid(result));
 
       router.push('/prompt/result');
     } catch (err: any) {
@@ -177,14 +179,14 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setError(null);
       setSourceContent({ type: 'text', content: text });
 
-      if (!checkApiKey()) {
+      if (!checkApiKey(options.model)) {
         throw new Error(
           'API key is missing. Please check your environment configuration.'
         );
       }
 
       const result = await proceedSummarizeText(text, options);
-      setSummary(isSummaryResponseValid(result));
+      setData(isSummaryResponseValid(result));
 
       router.push('/prompt/result');
     } catch (err: any) {
@@ -202,12 +204,12 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       setError(null);
       setSourceContent({
-        type: 'file',
+        type: 'document',
         content: file.name,
         fileName: file.name,
       });
 
-      if (!checkApiKey()) {
+      if (!checkApiKey(options.model)) {
         throw new Error(
           'API key is missing. Please check your environment configuration.'
         );
@@ -220,7 +222,7 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       }
 
       const result = await proceedSummarizeDoc(file, options);
-      setSummary(isSummaryResponseValid(result));
+      setData(isSummaryResponseValid(result));
       
       router.push('/prompt/result');
     } catch (err: any) {
@@ -238,7 +240,7 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       value={{
         isLoading,
         error,
-        summary,
+        data,
         options,
         setOptions,
         summarizeVideo,

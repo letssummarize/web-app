@@ -4,11 +4,11 @@ import { Logger } from './logger';
 
 const log = Logger();
 
-export function saveSummary(summary: SummaryResponse | null): void {
+export function saveData(summary: SummaryResponse | null): void {
   if (typeof window !== 'undefined' && summary) {
     try {
       localStorage.setItem(
-        getLocalStorageKeys().SUMMARY,
+        getLocalStorageKeys().DATA,
         JSON.stringify(summary)
       );
     } catch (err) {

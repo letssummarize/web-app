@@ -50,7 +50,7 @@ function PromptBox({ onSubmit, type, className, value = '' }: PromptBoxProps) {
             } gap-3 ${roundedClassName}`}
           >
             {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
-            {type === 'text' && <Textarea />}
+            {type === 'text' && <Textarea value={input} onChange={setInput} />}
             {type === 'upload' && <UploadBox />}
 
             {(type === 'text' || type === 'url') && (
