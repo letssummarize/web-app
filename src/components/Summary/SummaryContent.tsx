@@ -2,6 +2,7 @@ import Text from '../Typography/Text';
 import ReactMarkdown from 'react-markdown';
 import { useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { containArabicText } from '@/util/containArabicText';
 
 interface SummaryContentProps {
   text: string;
@@ -32,36 +33,17 @@ function SummaryContent({ text }: SummaryContentProps) {
       .catch((err) => console.error('Failed to copy text: ', err));
   }, []);
 
-  // const testMarkdown = `
-  // # Heading 1
-  // ## Heading 2
-  // ### Heading 3
+  text = text.trim();
 
-  // This is a paragraph with **bold** and *italic* text.
-
-  // - Unordered list item 1
-  // - Unordered list item 2
-
-  // 1. Ordered list item 1
-  // 2. Ordered list item 2
-
-  // > This is a blockquote
-
-  // \`\`\`js
-  // console.log("This is a code block");
-  // const x = 10;
-  // function hello() {
-  //   return "Hello, world!";
-  // }
-  // \`\`\`
-
-  // This is an \`inline code\` example.
-
-  // [This is a link](https://example.com)
-  // `;
+  const direction = containArabicText(text) ? 'rtl' : 'ltr';
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div
+      className={`flex flex-col gap-6 ${direction === 'rtl' ? 'md:text-right' : ''}`}
+      style={{
+        direction: direction === 'rtl' ? 'rtl' : 'ltr',
+      }}
+    >
       <ReactMarkdown
         components={{
           h1: ({ children }: ComponentType) => (
@@ -77,16 +59,19 @@ function SummaryContent({ text }: SummaryContentProps) {
             <Text className='leading-8 mb-4'>{children}</Text>
           ),
           ul: ({ children }: ComponentType) => (
-            <ul className='list-disc pl-6 mb-4 space-y-2'>{children}</ul>
+            <ul className='list-disc pl-6 mb-4 space-y-2 list-inside'>{children}</ul>
           ),
           ol: ({ children }: ComponentType) => (
-            <ol className='list-decimal pl-6 mb-4 space-y-2'>{children}</ol>
+            <ol className='list-decimal pl-6 mb-4 space-y-2 list-inside'>{children}</ol>
           ),
           li: ({ children }: ComponentType) => (
             <li className='leading-7'>{children}</li>
           ),
           blockquote: ({ children }: ComponentType) => (
-            <blockquote className='border-l-4 border-gray-700/50 pl-4 italic mb-4'>
+            <blockquote
+              className={`border-gray-700/50 italic mb-4 ${direction === 'rtl' ? 'text-right border-r-4 pr-4' : 'border-l-4 pl-4'
+                }`}
+            >
               {children}
             </blockquote>
           ),
@@ -99,7 +84,9 @@ function SummaryContent({ text }: SummaryContentProps) {
 
             return (
               <div className='relative group'>
-                <pre className='rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-4 mb-4 overflow-x-auto'>
+                <pre
+                  className={`rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-4 mb-4 overflow-x-auto md:text-left md:ltr`}
+                >
                   <code className={`font-mono text-sm ${languageClass}`}>
                     {codeContent}
                   </code>
@@ -135,7 +122,6 @@ function SummaryContent({ text }: SummaryContentProps) {
           ),
         }}
       >
-        {/* {testMarkdown} */}
         {text}
       </ReactMarkdown>
     </div>

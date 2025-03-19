@@ -1,4 +1,5 @@
 import {
+  SummarizationLanguage,
   SummaryFormat,
   SummaryLength,
   SummaryModel,
@@ -14,6 +15,7 @@ export interface SummaryOptions {
   model?: SummaryModel;
   speed?: SummarySpeed;
   listen?: boolean;
+  lang?: SummarizationLanguage;
 }
 
 export interface SummaryResponse {

@@ -10,6 +10,7 @@ import {
   SummaryLength,
   SummaryModel,
   SummarySpeed,
+  SummarizationLanguage,
 } from '@/api/enums/api.enums';
 
 interface CustomizationModalProps {
@@ -46,6 +47,11 @@ const lengthValueMap: Record<string, number> = {
   [SummaryLength.DETAILED]: 2,
 };
 
+const languageOptions = [
+  { label: 'English', value: SummarizationLanguage.EN },
+  { label: 'Arabic', value: SummarizationLanguage.AR },
+];
+
 function CustomizationModal({
   options,
   onSave,
@@ -64,6 +70,9 @@ function CustomizationModal({
     options.speed || SummarySpeed.DEFAULT
   );
   const [listen, setListen] = useState<boolean>(options.listen || false);
+  const [lang, setLang] = useState<SummarizationLanguage>(
+    options.lang || SummarizationLanguage.DEFAULT
+  );
 
   const handleFormatChange = (value: string) => {
     setFormat(value as SummaryFormat);
@@ -81,6 +90,10 @@ function CustomizationModal({
     setListen(event.target.checked);
   };
 
+  const handleLanguageChange = (value: string) => {
+    setLang(value as SummarizationLanguage);
+  };
+
   const handleSave = () => {
     onSave({
       length: lengthMap[length],
@@ -88,6 +101,7 @@ function CustomizationModal({
       model: model,
       speed: speed,
       listen: listen,
+      lang: lang,
     });
     onClose();
   };
@@ -105,7 +119,7 @@ function CustomizationModal({
           max={2}
           value={length}
           onChange={setLength}
-          labels={['Short', 'Standard', 'Comprehensive']}
+          labels={['Brief', 'Standard', 'Comprehensive']}
         />
         <Select
           label='Summary Format'
@@ -124,6 +138,12 @@ function CustomizationModal({
           options={speedOptions}
           value={speed}
           onChange={handleSpeedChange}
+        />
+        <Select
+          label='Language'
+          options={languageOptions}
+          value={lang}
+          onChange={handleLanguageChange}
         />
         <div className='flex items-center'>
           <input

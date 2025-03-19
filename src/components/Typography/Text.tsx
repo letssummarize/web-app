@@ -8,7 +8,7 @@ function Text({ children, className, center }: TextProps) {
   return (
     <p
       className={`text-base font-light ${
-        center ? 'text-center' : 'text-start'
+        center ? 'text-center' : ''
       } ${className || ''}`}
     >
       {children}
