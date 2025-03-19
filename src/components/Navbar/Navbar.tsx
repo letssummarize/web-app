@@ -37,7 +37,7 @@ const Navbar = () => {
       </Container>
 
       {menuOpen && (
-  <div className="lg:hidden fixed top-0 left-0 w-[280px] h-full bg-black shadow-2xl p-6 flex flex-col space-y-6 z-50 transition-all duration-300">
+  <div className="lg:hidden fixed top-0 left-0 max-w-[300px] h-full bg-black shadow-2xl p-6 flex flex-col space-y-6 z-50 transition-all duration-300">
     <button className="bg-black text-white py-3 px-4 rounded-lg w-full">
       <Logo {...navbarData.logo} classNames="flex justify-center" />
     </button>
