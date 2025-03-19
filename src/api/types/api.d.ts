@@ -26,6 +26,7 @@ export interface SummaryOptions {
   speed?: SummarySpeed;
   listen?: boolean;
   lang?: SummarizationLanguage;
+  customInstructions?: string;
 }
 
 export interface SummaryResponse {
