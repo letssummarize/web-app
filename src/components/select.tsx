@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { IconName } from '@/components/Icon/types/Icon';
 import ChevronDown from './Icon/ChevronDown';
 import Icon from './Icon/Icon';
+import InputLabel from './InputLabel';
 
 interface SelectOption {
   label: string;
@@ -14,15 +15,19 @@ interface SelectOption {
 interface SelectProps {
   label?: string;
   options: SelectOption[];
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
+  description?: string;
 }
 
 export default function Select({
   label,
   options,
   value,
+  description,
   onChange,
+  disabled,
 }: SelectProps) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
@@ -30,18 +35,24 @@ export default function Select({
   const listboxId = `select-listbox-${Math.random().toString(36).substr(2, 9)}`;
 
   const handleOptionClick = (optionValue: string) => {
-    setSelectedValue(optionValue);
-    onChange(optionValue);
-    setIsOpen(false);
+    if (!disabled) {
+      setSelectedValue(optionValue);
+      onChange(optionValue);
+      setIsOpen(false);
+    }
   };
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    if (!disabled) {
+      setIsOpen(!isOpen);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (disabled) return;
+
     const currentIndex = options.findIndex(option => option.value === selectedValue);
-    
+
     switch (e.key) {
       case 'Escape':
         setIsOpen(false);
@@ -81,7 +92,7 @@ export default function Select({
         setIsOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -89,12 +100,15 @@ export default function Select({
   const selectedOption = options.find(option => option.value === selectedValue);
 
   return (
-    <div className='flex flex-col w-full mb-4'>
-      {label && (
-        <label id={`${listboxId}-label`} className='text-white text-base font-medium mb-3'>{label}</label>
-      )}
+    <div className={`flex flex-col w-full ${disabled ? 'opacity-50' : ''}`}>
+      {label &&
+        <InputLabel
+          label={label}
+          description={description}
+        />
+      }
       <div className='relative w-full' ref={dropdownRef}>
-        <div 
+        <div
           onClick={toggleDropdown}
           onKeyDown={handleKeyDown}
           role="combobox"
@@ -103,20 +117,21 @@ export default function Select({
           aria-expanded={isOpen}
           aria-controls={listboxId}
           aria-activedescendant={isOpen ? `${listboxId}-option-${selectedValue}` : undefined}
-          tabIndex={0}
-          className='w-full bg-[#0C0C0C] text-white border hover:border-white/30 rounded-lg py-3 px-4 flex justify-between items-center cursor-pointer transition-colors duration-200'
+          tabIndex={disabled ? -1 : 0}
+          aria-disabled={disabled}
+          className={`w-full bg-[#0C0C0C] text-white border hover:border-white/30 rounded-lg py-2 px-4 flex justify-between items-center ${disabled ? 'cursor-not-allowed border-gray-800 hover:border-gray-800' : 'cursor-pointer'} transition-colors duration-200`}
         >
           <div className='flex items-center gap-2'>
-            {selectedOption?.icon && 
+            {selectedOption?.icon &&
               <Icon icon={selectedOption.icon} props={{ className: 'w-5 h-5 text-gray-300', 'aria-hidden': 'true' }} />
             }
-            <span>{selectedOption?.label || 'Select an option'}</span>
+            <span className='text-sm'>{selectedOption?.label || 'Select an option'}</span>
           </div>
-          <ChevronDown className={`w-7 h-auto text-gray-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+          <ChevronDown className={`w-7 h-auto text-white/60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
         </div>
 
         {isOpen && (
-          <ul 
+          <ul
             id={listboxId}
             role="listbox"
             aria-labelledby={label ? `${listboxId}-label` : undefined}
@@ -130,11 +145,10 @@ export default function Select({
                 aria-selected={selectedValue === option.value}
                 onClick={() => handleOptionClick(option.value)}
                 tabIndex={-1}
-                className={`cursor-pointer flex items-center gap-2 px-4 py-2.5 hover:bg-gray-800 transition-colors duration-150 ${
-                  selectedValue === option.value
-                    ? 'bg-gray-800/50 text-white font-medium'
-                    : 'text-gray-300'
-                }`}
+                className={`text-sm cursor-pointer flex items-center gap-2 px-4 py-2 hover:bg-white/10 transition-colors duration-150 ${selectedValue === option.value
+                  ? 'bg-white/5 text-white font-medium'
+                  : 'text-gray-300'
+                  }`}
               >
                 {option.icon && <Icon icon={option.icon} props={{ className: 'w-5 h-5', 'aria-hidden': 'true' }} />}
                 {option.label}

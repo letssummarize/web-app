@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer';
 import { appMetaData } from '@/data/appMetadata';
+import { SummaryProvider } from '@/context/SummaryProvider';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -18,8 +19,47 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: appMetaData.title,
-  description: appMetaData.description,
+  title: {
+    template: '%s | Let\'s Summarize',
+    default: 'Let\'s Summarize - AI-powered Content Summarization'
+  },
+  description: 'Transform long content into concise, meaningful summaries using AI. Support for videos, articles, and documents.',
+  authors: [
+    { name: "Khaled Alshibani", url: "https://khaled.technway.biz/" },
+    { name: "Muneeb Almoliky", url: "https://github.com/Muneeb-Almoliky" },
+    { name: "Sabri Alshibani", url: "https://github.com/sabriAlshibani" },
+  ],
+  keywords: [
+    'AI summarization',
+    'text summary',
+    'YouTube video summary',
+    'document summary',
+    'article summary',
+    'PDF summary',
+    'content summarizer',
+    'Arabic Content summarizer',
+    'AI assistant',
+    'productivity tool'
+  ],
+  creator: "Let's Summarize Team",
+  publisher: "Let's Summarize",
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: "Let's Summarize - AI-powered Content Summarization",
+    description: 'Transform long content into concise, meaningful summaries using AI. Support for videos, articles, and documents.',
+    url: '/',
+    siteName: "Let's Summarize",
+    images: [{
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: "Let's Summarize - AI Content Summarization"
+    }]
+  },
+  themeColor: '#161616',
+  category: 'technology',
+  applicationName: "Let's Summarize",
 };
 
 export default function RootLayout({
@@ -42,7 +82,7 @@ export default function RootLayout({
         />
         <div className='relative z-1 h-full flex flex-col space-y-[160px]'>
           <Navbar />
-          {children}
+          <SummaryProvider>{children}</SummaryProvider>
           <Footer />
         </div>
       </body>

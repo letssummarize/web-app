@@ -8,6 +8,14 @@ interface VideoThumbnailProps {
   channel: string;
 }
 function VideoThumbnail({ thumbnail, title, channel }: VideoThumbnailProps) {
+  if (
+    !thumbnail ||
+    !title ||
+    !channel
+  ) {
+    return null;
+  }
+
   return (
     <div className='grid grid-cols-2 gap-6'>
       <div className='relative aspect-video'>

@@ -1,45 +1,69 @@
 'use client';
 
 import { promptSectionData } from '@/data/promptSection';
-import Button from './Button';
 import PromptBox, { PromptBoxType } from './PromptBox/PromptBox';
 import Heading from './Typography/Heading';
 import Text from './Typography/Text';
-import { useState } from 'react';
-import Overlay from './Overlay';
-import CustomizationModal from './Modal/CustomizationModal';
+import { useSummary } from '@/hooks/useSummary';
+import LoadingSpinner from './LoadingSpinner';
 
-function PromptSection({ promptBoxType }: { promptBoxType: PromptBoxType }) {
-  const [showCustomization, setShowCustomization] = useState(false);
-  const handleSubmit = () => {};
+interface PromptSectionProps {
+  promptBoxType: PromptBoxType;
+  value?: string;
+  uploadedFile?: File | null;
+  showHeading?: boolean;
+}
+
+function PromptSection({
+  promptBoxType,
+  value,
+  uploadedFile,
+  showHeading = true,
+}: PromptSectionProps) {
+  const { summarizeVideo, summarizeText, summarizeDoc, isLoading, error } =
+    useSummary();
+
+  const handleSubmit = (input: string) => {
+    if (promptBoxType === 'url') {
+      summarizeVideo(input);
+    } else if (promptBoxType === 'text') {
+      summarizeText(input);
+    }
+  };
+
+  const handleFileUpload = (file: File) => {
+    summarizeDoc(file);
+  };
 
   const promptData = promptSectionData.find(
     (item) => item.type === promptBoxType
   );
 
   return (
-    <>
-      <section className='flex flex-col items-center justify-center space-y-8'>
-        <Heading level='h1' center className='mb-4'>
-          {promptData?.title}
-        </Heading>
-        <Text center>{promptData?.description}</Text>
-        <PromptBox onSubmit={handleSubmit} type={promptBoxType} />
-        <Button
-          label='Customize Your Summarization'
-          icon='filter'
-          variant='ghost'
-          size='lg'
-          onClick={() => setShowCustomization(true)}
-        />
-      </section>
-
-      {showCustomization && (
-        <Overlay>
-          <CustomizationModal onClose={() => setShowCustomization(false)} />
-        </Overlay>
+    <section className='flex flex-col items-center justify-center space-y-8'>
+      {showHeading && (
+        <>
+          <Heading level='h1' center className='mb-4'>
+            {promptData?.title}
+          </Heading>
+          <Text center>{promptData?.description}</Text>
+        </>
       )}
-    </>
+
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <PromptBox
+          onSubmit={handleSubmit}
+          onFileUpload={handleFileUpload}
+          uploadedFile={uploadedFile}
+          type={promptBoxType}
+          value={value}
+        />
+      )}
+
+      {error && <div className='text-red-500 mt-4'>Error: {error}</div>}
+    </section>
   );
 }
 

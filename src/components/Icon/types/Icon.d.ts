@@ -8,4 +8,9 @@ export type IconName =
   | 'api'
   | 'ai'
   | 'filter'
-  | 'sound';
+  | 'sound'
+  | 'restart'
+  | 'resume'
+  | 'pause'
+  | 'menu'
+  | 'close';

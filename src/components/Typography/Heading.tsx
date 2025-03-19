@@ -11,10 +11,10 @@ function Heading({ children, className, center, level }: HeadingProps) {
   const Component = level;
   const fontSize =
     level === 'h1'
-      ? 'text-[36px]'
-      : level === 'h2'
-      ? 'text-[20px]'
-      : 'text-[18px]';
+    ? 'text-[36px] max-sm:text-[28px]'
+    : level === 'h2'
+    ? 'text-[20px] max-sm:text-[18px]'
+    : 'text-[18px] max-sm:text-[16px]';
   const fontWeight =
     level === 'h1'
       ? 'font-semibold'
