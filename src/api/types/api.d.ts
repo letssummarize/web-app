@@ -9,6 +9,16 @@ import {
 export type SummaryType = 'youtube' | 'text' | 'document';
 export type documentTypes = 'pdf' | 'docx' | 'txt';
 
+export interface summaryRequest {
+  content: SummaryReqContent;
+  options?: SummaryOptions;
+}
+
+export interface SummaryReqContent {
+  videoUrl?: string;
+  text?: string;
+}
+
 export interface SummaryOptions {
   length?: SummaryLength;
   format?: SummaryFormat;

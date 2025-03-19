@@ -2,10 +2,11 @@ import getApiBaseUrl from '@/util/getApiBaseUrl';
 import { Logger } from '@/util/logger';
 import axios from 'axios';
 import { SummaryModel } from '@/api/enums/api.enums';
+import { summaryRequest } from './types/api';
 
 const log = Logger();
 
-const createAxiosInstance = (contentType = 'application/json', model: SummaryModel = SummaryModel.DEFAULT) => {
+const createAxiosInstance = (contentType = 'application/json') => {
   const instance = axios.create({
     baseURL: getApiBaseUrl(),
     headers: { 'Content-Type': contentType },
@@ -14,7 +15,13 @@ const createAxiosInstance = (contentType = 'application/json', model: SummaryMod
 
   instance.interceptors.request.use(
     (config) => {
-      const apiKey = model === SummaryModel.OPENAI ? process.env.NEXT_PUBLIC_OPENAI_API_KEY : process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
+      const data = config.data as summaryRequest;
+      const model = data.options?.model || SummaryModel.DEFAULT;
+      const apiKey =
+        model === SummaryModel.OPENAI
+          ? process.env.NEXT_PUBLIC_OPENAI_API_KEY
+          : process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
+      log.info('model ', model);
       if (apiKey) {
         config.headers.Authorization = `Bearer ${apiKey}`;
       } else {
