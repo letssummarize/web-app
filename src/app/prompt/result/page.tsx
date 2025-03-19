@@ -82,6 +82,7 @@ export default function SummaryResultPage() {
         promptBoxType={getPromptBoxType(sourceContent.type)}
         uploadedFile={sourceContent.type === 'document' && sourceContent.fileName ? new File([sourceContent.content], sourceContent.fileName, { type: 'text/plain' }) : null}
         showHeading={false}
+        shouldFocus={false}
       />
 
       <Divider />

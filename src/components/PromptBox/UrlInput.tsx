@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { validateUrl } from '@/util/validateUrl';
 import { validateYoutubeVideoUrl } from '@/util/validateYoutubeVideoUrl';
 
@@ -5,9 +6,19 @@ interface UrlInputProps {
   url: string;
   setUrl: (url: string) => void;
   allowOnlyYoutube?: boolean;
+  shouldFocus?: boolean;
+
 }
 
-function UrlInput({ url, setUrl, allowOnlyYoutube = true }: UrlInputProps) {
+function UrlInput({ url, setUrl, allowOnlyYoutube = true, shouldFocus = true }: UrlInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   const checkUrl = (input: string) => {
     if (allowOnlyYoutube) {
       return validateYoutubeVideoUrl(input);
@@ -22,6 +33,7 @@ function UrlInput({ url, setUrl, allowOnlyYoutube = true }: UrlInputProps) {
 
   return (
     <input
+      ref={inputRef}
       type='text'
       value={url}
       onChange={handleChange}
