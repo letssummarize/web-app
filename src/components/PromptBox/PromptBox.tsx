@@ -81,7 +81,7 @@ function PromptBox({
                 variant='gradient'
                 radius={type === 'url' ? 'full' : 'default'}
                 size={type === 'url' ? 'lg' : 'md'}
-                className={`${type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-2' : ''
+                className={`${type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-3' : ''
                   }`}
               >Summarize</Button>
             )}

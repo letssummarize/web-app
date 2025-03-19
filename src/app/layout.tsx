@@ -19,9 +19,47 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Let's Summarize",
-  description:
-    'AI-powered text summarization tool for YouTube videos, articles, and documents.',
+  title: {
+    template: '%s | Let\'s Summarize',
+    default: 'Let\'s Summarize - AI-powered Content Summarization'
+  },
+  description: 'Transform long content into concise, meaningful summaries using AI. Support for videos, articles, and documents.',
+  authors: [
+    { name: "Khaled Alshibani", url: "https://khaled.technway.biz/" },
+    { name: "Muneeb Almoliky", url: "https://github.com/Muneeb-Almoliky" },
+    { name: "Sabri Alshibani", url: "https://github.com/sabriAlshibani" },
+  ],
+  keywords: [
+    'AI summarization',
+    'text summary',
+    'YouTube video summary',
+    'document summary',
+    'article summary',
+    'PDF summary',
+    'content summarizer',
+    'Arabic Content summarizer',
+    'AI assistant',
+    'productivity tool'
+  ],
+  creator: "Let's Summarize Team",
+  publisher: "Let's Summarize",
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: "Let's Summarize - AI-powered Content Summarization",
+    description: 'Transform long content into concise, meaningful summaries using AI. Support for videos, articles, and documents.',
+    url: '/',
+    siteName: "Let's Summarize",
+    images: [{
+      url: '/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: "Let's Summarize - AI Content Summarization"
+    }]
+  },
+  themeColor: '#161616',
+  category: 'technology',
+  applicationName: "Let's Summarize",
 };
 
 export default function RootLayout({

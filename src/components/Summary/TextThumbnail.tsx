@@ -30,7 +30,7 @@ function TextThumbnail({ content, title, wordCount }: TextThumbnailProps) {
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-4'>
           <TextIcon className='w-8 h-auto text-white/50' />
-          <Text><span className='font-medium'>Summarized Text</span></Text>
+          <Text><span className='font-medium'>Raw Text</span></Text>
         </div>
         <ChevronDown
           className={`w-6 h-6 text-white/60 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}

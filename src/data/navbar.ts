@@ -33,7 +33,7 @@ export const navbarData: NavbarData = {
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/letsSummary/api',
+      href: 'https://github.com/letssummarize/lets-summarize-api',
       icon: 'github',
     },
   ],
