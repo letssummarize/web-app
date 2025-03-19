@@ -61,7 +61,9 @@ function CustomizationModal({
   onClose,
 }: CustomizationModalProps) {
   const [length, setLength] = useState(
-    options.customInstructions ? undefined : (options.length ? lengthValueMap[options.length] || 1 : 1)
+    options.customInstructions 
+      ? undefined 
+      : (options.length ? lengthValueMap[options.length] : 1)
   );
   const [format, setFormat] = useState<SummaryFormat | undefined>(
     options.customInstructions ? undefined : (options.format || SummaryFormat.DEFAULT)
@@ -123,7 +125,7 @@ function CustomizationModal({
 
   const handleSave = () => {
     onSave({
-      length: isCustomInstructionsEnabled ? undefined : (length ? lengthMap[length] : undefined),
+      length: isCustomInstructionsEnabled ? undefined : (length !== undefined ? lengthMap[length] : undefined),
       format: isCustomInstructionsEnabled ? undefined : format,
       model: model,
       speed: speed,
