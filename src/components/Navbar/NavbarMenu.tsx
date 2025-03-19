@@ -15,7 +15,7 @@ function NavbarMenu({
 }: NavbarMenu) {
   return (
     <ul
-      className={`hidden md:flex items-center ${
+      className={`flex items-center ${
         secondary ? "space-x-8" : "space-x-10"
       } text-base ${classNames}`}
     >
