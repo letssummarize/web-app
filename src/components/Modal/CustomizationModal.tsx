@@ -63,6 +63,7 @@ function CustomizationModal({
   const [speed, setSpeed] = useState<SummarySpeed>(
     options.speed || SummarySpeed.DEFAULT
   );
+  const [listen, setListen] = useState<boolean>(options.listen || false);
 
   const handleFormatChange = (value: string) => {
     setFormat(value as SummaryFormat);
@@ -76,12 +77,17 @@ function CustomizationModal({
     setSpeed(value as SummarySpeed);
   };
 
+  const handleListenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setListen(event.target.checked);
+  };
+
   const handleSave = () => {
     onSave({
       length: lengthMap[length],
       format: format,
       model: model,
       speed: speed,
+      listen: listen,
     });
     onClose();
   };
@@ -119,6 +125,16 @@ function CustomizationModal({
           value={speed}
           onChange={handleSpeedChange}
         />
+        <div className='flex items-center'>
+          <input
+            type='checkbox'
+            id='listen'
+            checked={listen}
+            onChange={handleListenChange}
+            className='mr-2'
+          />
+          <label htmlFor='listen'>Enable text-to-speech</label>
+        </div>
       </div>
     </Modal>
   );

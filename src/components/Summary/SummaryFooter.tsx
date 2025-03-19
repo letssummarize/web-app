@@ -1,16 +1,18 @@
-import Button from '../Button';
+import ReadAloudButton from '../ReadAloudButton';
 import WordCount from '../WordCount';
 
-function SummaryFooter({ contentToCountItsWords }: { contentToCountItsWords: string }) {
+interface SummaryFooterProps {
+  contentToCountItsWords: string;
+  audioUrl?: string;
+}
+
+function SummaryFooter({
+  contentToCountItsWords,
+  audioUrl,
+}: SummaryFooterProps) {
   return (
     <div className='flex items-center justify-between'>
-      <Button
-        variant='outlined'
-        radius='full'
-        size='sm'
-        label='Read aloud'
-        icon='sound'
-      />
+      <ReadAloudButton audioUrl={audioUrl} />
       {contentToCountItsWords && <WordCount text={contentToCountItsWords} />}
     </div>
   );

@@ -3,7 +3,7 @@ import { IconName } from './Icon/types/Icon';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconName;
-  label: string;
+  children: React.ReactNode;
   variant?: 'default' | 'gradient' | 'ghost' | 'outlined';
   radius?: 'default' | 'full';
   size?: 'sm' | 'md' | 'lg';
@@ -11,49 +11,45 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = ({
   icon,
-  label,
+  children,
   variant = 'default',
   radius = 'default',
   size = 'md',
   className,
+  disabled,
   ...props
 }: ButtonProps) => {
   const classes = [
-    'cursor-pointer flex items-center gap-2',
-    variant === 'default' &&
-      'bg-gray-100 text-black font-medium',
+    'inline-flex items-center justify-center gap-2',
+    'font-medium transition-colors duration-200 cursor-pointer',
+    variant === 'default' && 'bg-gray-200 hover:bg-gray-300 text-black',
     variant === 'gradient' &&
-      'bg-gradient-to-r from-[#3e15ba] via-[#a02b66] to-[#d8775f] text-white font-light',
-    variant === 'ghost' && 'bg-transparent border-0 text-white font-light',
-    variant === 'outlined' && 'bg-transparent border-1 text-white font-light',
-    variant !== 'ghost' &&
-      (radius === 'full' ? 'rounded-full' : 'rounded-[5px]'),
-    variant !== 'ghost' &&
-      {
-        sm: 'px-3 py-1.5 text-sm',
-        md: 'px-5 py-2.5 text-base',
-        lg: 'px-7 py-3.5 text-lg',
-      }[size],
+    'bg-gradient-to-r from-[#D8775F] via-[#A02B66] to-[#3E15BA] text-white',
+    variant === 'ghost' && 'bg-transparent hover:bg-gray-700/10',
+    variant === 'outlined' &&
+    'border border-gray-700/50 hover:border-gray-700/70 hover:bg-gray-700/10',
+    radius === 'default' && 'rounded-lg',
+    radius === 'full' && 'rounded-full',
+    size === 'sm' && 'px-3 py-1.5 text-sm',
+    size === 'md' && 'px-4 py-2',
+    size === 'lg' && 'px-6 py-3 text-lg',
+    disabled && 'opacity-50 cursor-not-allowed',
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
-  const iconSize = size === 'lg' ? 'w-5' : size === 'md' ? 'w-4' : 'w-4';
-
   return (
-    <button {...props} className={classes}>
+    <button className={classes} disabled={disabled} {...props}>
       {icon && (
         <Icon
           icon={icon}
           props={{
-            className: `${iconSize} h-auto fill-white ${
-              variant === 'ghost' ? 'fill-current' : 'fill-white'
-            }`,
+            className: 'h-4 w-4 fill-white',
           }}
         />
       )}
-      {label}
+      {children}
     </button>
   );
 };

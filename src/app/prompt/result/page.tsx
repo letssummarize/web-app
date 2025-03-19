@@ -55,7 +55,10 @@ export default function SummaryResultPage() {
         <Divider />
 
         {data?.summary && (
-          <SummaryFooter contentToCountItsWords={data.summary} />
+          <SummaryFooter
+            contentToCountItsWords={data.summary}
+            audioUrl={data.audioFilePath}
+          />
         )}
       </div>
 

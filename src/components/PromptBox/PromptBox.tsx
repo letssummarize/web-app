@@ -59,13 +59,12 @@ function PromptBox({
           className={`relative flex items-center w-full overflow-hidden bg-gradient-to-r from-[#D8775F] via-[#A02B66] to-[#3E15BA] p-[1px] shadow-[0px_0px_50px_0px_rgba(183,75,99,0.4)] ${roundedClassName}`}
         >
           <div
-            className={`w-full bg-[#0C0C0C] flex ${
-              type === 'url'
+            className={`w-full bg-[#0C0C0C] flex ${type === 'url'
                 ? 'items-center'
                 : type === 'text'
-                ? 'flex-col items-end'
-                : 'flex-col items-center'
-            } gap-3 ${roundedClassName} ${type === 'upload' ? 'p-10' : ''}`}
+                  ? 'flex-col items-end'
+                  : 'flex-col items-center'
+              } gap-3 ${roundedClassName} ${type === 'upload' ? 'p-10' : ''}`}
           >
             {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
             {type === 'text' && <Textarea value={input} onChange={setInput} />}
@@ -76,27 +75,26 @@ function PromptBox({
             {(type !== 'upload' || selectedFile) && (
               <Button
                 type='submit'
-                label='Summarize'
                 icon='ai'
                 variant='gradient'
                 radius={type === 'url' ? 'full' : 'default'}
                 size={type === 'url' ? 'lg' : 'md'}
-                className={`${
-                  type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-2' : ''
-                }`}
-              />
+                className={`${type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-2' : ''
+                  }`}
+              >Summarize</Button>
             )}
           </div>
         </div>
       </form>
 
       <Button
-        label='Customize Your Summarization'
         icon='filter'
         variant='ghost'
         size='lg'
         onClick={() => setShowCustomization(true)}
-      />
+      >
+        Customize Your Summarization
+      </Button>
 
       {showCustomization && (
         <Overlay>

@@ -25,8 +25,12 @@ function Modal({ title, children, onSave, onClose }: ModalProps) {
       {children}
 
       <div className='w-full flex justify-end gap-4'>
-        <Button label='Cancel' variant='outlined' radius='default' size='md' onClick={onClose} />
-        <Button label='Save' variant='default' radius='default' size='md' onClick={onSave} />
+        <Button variant='outlined' radius='default' size='md' onClick={onClose}>
+          Cancel
+        </Button>
+        <Button variant='default' radius='default' size='md' onClick={onSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

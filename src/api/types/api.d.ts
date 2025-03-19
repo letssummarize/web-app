@@ -13,6 +13,7 @@ export interface SummaryOptions {
   format?: SummaryFormat;
   model?: SummaryModel;
   speed?: SummarySpeed;
+  listen?: boolean;
 }
 
 export interface SummaryResponse {
@@ -20,6 +21,7 @@ export interface SummaryResponse {
   text?: string;
   summary: string;
   videoMetadata?: YoutubeVideoMetadata;
+  audioFilePath?: string;
 }
 
 export interface YoutubeVideoMetadata {
