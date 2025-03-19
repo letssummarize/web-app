@@ -11,7 +11,6 @@ import {
 } from '@/services/summaryService';
 import { isSummaryResponseValid } from '@/util/isSummaryResponseValid';
 import { isDocumentSupported } from '@/util/isDocumentSupported';
-import { checkApiKey } from '@/util/checkApiKey';
 import { Logger } from '@/util/logger';
 import { getLocalStorageKeys } from '@/util/getLocalStorageKeys';
 import { saveOptions } from '@/util/saveOptions';
@@ -142,12 +141,6 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setError(null);
       setSourceContent({ type: 'youtube', content: url });
 
-      if (!checkApiKey(options.model)) {
-        throw new Error(
-          'API key is missing. Please check your environment configuration.'
-        );
-      }
-
       const result = await proceedSummarizeVideo(url, options);
       setData(isSummaryResponseValid(result));
 
@@ -169,12 +162,6 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       setError(null);
       setSourceContent({ type: 'text', content: text });
-
-      if (!checkApiKey(options.model)) {
-        throw new Error(
-          'API key is missing. Please check your environment configuration.'
-        );
-      }
 
       const result = await proceedSummarizeText(text, options);
       setData(isSummaryResponseValid(result));
@@ -200,12 +187,6 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
         content: fileContent,
         fileName: file.name
       });
-
-      if (!checkApiKey(options.model)) {
-        throw new Error(
-          'API key is missing. Please check your environment configuration.'
-        );
-      }
 
       if (!isDocumentSupported(file)) {
         throw new Error(
