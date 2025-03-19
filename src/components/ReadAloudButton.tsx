@@ -8,6 +8,8 @@ interface ReadAloudButtonProps {
 }
 
 function ReadAloudButton({ audioUrl }: ReadAloudButtonProps) {
+  if (!audioUrl) return null;
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +84,20 @@ function ReadAloudButton({ audioUrl }: ReadAloudButtonProps) {
         </div>
       );
     }
+    if (audioRef.current && audioRef.current.currentTime > 0) {
+      return isPlaying ? 'Pause' : 'Resume';
+    }
     return error ? 'Retry' : (isPlaying ? 'Pause' : 'Read aloud');
+  };
+
+  const getButtonIconName = () => {
+    if (isLoading) {
+      return 'sound';
+    }
+    if (audioRef.current && audioRef.current.currentTime > 0) {
+      return isPlaying ? 'pause' : 'resume';
+    }
+    return error ? 'restart' : (isPlaying ? 'pause' : 'sound');
   };
 
   return (
@@ -92,7 +107,7 @@ function ReadAloudButton({ audioUrl }: ReadAloudButtonProps) {
           variant='outlined'
           radius='full'
           size='sm'
-          icon={isLoading ? undefined : 'sound'}
+          icon={getButtonIconName()}
           onClick={togglePlayback}
           disabled={!audioUrl || isLoading}
         >

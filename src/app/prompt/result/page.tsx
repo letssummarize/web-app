@@ -7,6 +7,7 @@ import SummaryContent from '@/components/Summary/SummaryContent';
 import SummaryFooter from '@/components/Summary/SummaryFooter';
 import VideoThumbnail from '@/components/Summary/VideoThumbnail';
 import { useSummary } from '@/hooks/useSummary';
+import { getFullAudioFilePath } from '@/util/getFullAudioFilePath';
 import { getPromptBoxType } from '@/util/getPromptBoxType';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -57,7 +58,7 @@ export default function SummaryResultPage() {
         {data?.summary && (
           <SummaryFooter
             contentToCountItsWords={data.summary}
-            audioUrl={data.audioFilePath}
+            audioUrl={getFullAudioFilePath(data.audioFilePath as string)}
           />
         )}
       </div>
