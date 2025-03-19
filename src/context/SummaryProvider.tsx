@@ -203,10 +203,13 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsLoading(true);
       setError(null);
+
+      const fileContent = await file.text();
+      
       setSourceContent({
         type: 'document',
-        content: file.name,
-        fileName: file.name,
+        content: fileContent,
+        fileName: file.name
       });
 
       if (!checkApiKey(options.model)) {

@@ -10,12 +10,14 @@ import LoadingSpinner from './LoadingSpinner';
 interface PromptSectionProps {
   promptBoxType: PromptBoxType;
   value?: string;
+  uploadedFile?: File | null;
   showHeading?: boolean;
 }
 
 function PromptSection({
   promptBoxType,
   value,
+  uploadedFile,
   showHeading = true,
 }: PromptSectionProps) {
   const { summarizeVideo, summarizeText, summarizeDoc, isLoading, error } =
@@ -54,6 +56,7 @@ function PromptSection({
         <PromptBox
           onSubmit={handleSubmit}
           onFileUpload={handleFileUpload}
+          uploadedFile={uploadedFile}
           type={promptBoxType}
           value={value}
         />

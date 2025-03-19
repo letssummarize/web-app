@@ -13,7 +13,7 @@ function SummaryFooter({
   return (
     <div className='flex items-center justify-between'>
       {audioUrl && <ReadAloudButton audioUrl={audioUrl} />}
-      {contentToCountItsWords && <WordCount text={contentToCountItsWords} />}
+      {contentToCountItsWords && <WordCount className="ml-auto" text={contentToCountItsWords} />}
     </div>
   );
 }

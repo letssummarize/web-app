@@ -14,6 +14,7 @@ export type PromptBoxType = 'url' | 'text' | 'upload';
 interface PromptBoxProps {
   onSubmit: (url: string) => void;
   onFileUpload?: (file: File) => void;
+  uploadedFile?: File | null;
   className?: string;
   type: PromptBoxType;
   value?: string;
@@ -22,6 +23,7 @@ interface PromptBoxProps {
 function PromptBox({
   onSubmit,
   onFileUpload,
+  uploadedFile,
   type,
   className,
   value = '',
@@ -60,16 +62,16 @@ function PromptBox({
         >
           <div
             className={`w-full bg-[#0C0C0C] flex ${type === 'url'
-                ? 'items-center'
-                : type === 'text'
-                  ? 'flex-col items-end'
-                  : 'flex-col items-center'
+              ? 'items-center'
+              : type === 'text'
+                ? 'flex-col items-end'
+                : 'flex-col items-center'
               } gap-3 ${roundedClassName} ${type === 'upload' ? 'p-10' : ''}`}
           >
             {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
             {type === 'text' && <Textarea value={input} onChange={setInput} />}
             {type === 'upload' && (
-              <UploadBox onFileSelected={handleFileSelected} />
+              <UploadBox onFileSelected={handleFileSelected} uploadedFile={uploadedFile} />
             )}
 
             {(type !== 'upload' || selectedFile) && (

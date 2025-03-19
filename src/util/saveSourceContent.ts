@@ -6,6 +6,7 @@ export interface SourceContent {
   type: SummaryType;
   content: string;
   fileName?: string;
+  filePath?: string;
 }
 
 const log = Logger();

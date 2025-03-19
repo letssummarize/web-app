@@ -5,12 +5,15 @@ import CloudUpload from '../Icon/CloudUpload';
 
 interface UploadBoxProps {
   onFileSelected: (file: File) => void;
+  uploadedFile?: File | null;
 }
 
-function UploadBox({ onFileSelected }: UploadBoxProps) {
+function UploadBox({ onFileSelected, uploadedFile }: UploadBoxProps) {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const displayFile = uploadedFile || selectedFile;
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -56,9 +59,8 @@ function UploadBox({ onFileSelected }: UploadBoxProps) {
       onDragLeave={handleDrag}
       onDrop={handleDrop}
       onClick={openFileSelector}
-      className={`w-full bg-[#0C0C0C] flex flex-col items-center justify-center gap-4 rounded-[15px] cursor-pointer ${
-        dragActive ? 'border-dashed' : ''
-      }`}
+      className={`w-full bg-[#0C0C0C] flex flex-col items-center justify-center gap-4 rounded-[15px] cursor-pointer ${dragActive ? 'border-dashed' : ''
+        }`}
     >
       <input
         type='file'
@@ -67,16 +69,16 @@ function UploadBox({ onFileSelected }: UploadBoxProps) {
         className='hidden'
         accept='.pdf,.docx,.txt'
       />
-      {selectedFile ? (
+      {displayFile ? (
         <div className='text-center flex flex-col items-center'>
           <p className='text-white font-medium text-lg mb-1'>
-            {selectedFile.name}
+            {displayFile.name}
           </p>
           <p className='text-gray-300 text-sm'>
-            Size: {(selectedFile.size / 1024).toFixed(2)} KB
+            Size: {(displayFile.size / 1024).toFixed(2)} KB
           </p>
           <p className='text-gray-300 text-sm'>
-            Type: {selectedFile.type.split('/')[1].toUpperCase() || 'Unknown'}
+            Type: {displayFile.name.split('.')[1].toUpperCase() || 'Unknown'}
           </p>
           <p className='text-sm flex gap-2 items-center border-t pt-3 mt-4 text-gray-400'>
             <CloudUpload className='w-6 h-auto ' />

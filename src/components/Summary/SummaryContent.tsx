@@ -33,13 +33,11 @@ function SummaryContent({ text }: SummaryContentProps) {
       .catch((err) => console.error('Failed to copy text: ', err));
   }, []);
 
-  text = text.trim();
-
   const direction = containArabicText(text) ? 'rtl' : 'ltr';
 
   return (
     <div
-      className={`flex flex-col gap-6 ${direction === 'rtl' ? 'md:text-right' : ''}`}
+      className={`flex flex-col ${direction === 'rtl' ? 'md:text-right' : ''}`}
       style={{
         direction: direction === 'rtl' ? 'rtl' : 'ltr',
       }}
@@ -47,29 +45,29 @@ function SummaryContent({ text }: SummaryContentProps) {
       <ReactMarkdown
         components={{
           h1: ({ children }: ComponentType) => (
-            <Text className='text-3xl font-bold mb-6'>{children}</Text>
+            <Text className='text-3xl font-bold mb-8'>{children}</Text>
           ),
           h2: ({ children }: ComponentType) => (
-            <Text className='text-2xl font-bold mb-5'>{children}</Text>
+            <Text className='text-2xl font-bold mb-6 mt-8'>{children}</Text>
           ),
           h3: ({ children }: ComponentType) => (
-            <Text className='text-xl font-bold mb-4'>{children}</Text>
+            <Text className='text-xl font-bold mb-5 mt-6'>{children}</Text>
           ),
           p: ({ children }: ComponentType) => (
-            <Text className='leading-8 mb-4'>{children}</Text>
+            <Text className='leading-8 mb-5'>{children}</Text>
           ),
           ul: ({ children }: ComponentType) => (
-            <ul className='list-disc pl-6 mb-4 space-y-2 list-inside'>{children}</ul>
+            <ul className='list-disc pl-6 mb-6 space-y-3'>{children}</ul>
           ),
           ol: ({ children }: ComponentType) => (
-            <ol className='list-decimal pl-6 mb-4 space-y-2 list-inside'>{children}</ol>
+            <ol className='list-decimal pl-6 mb-6 space-y-3'>{children}</ol>
           ),
           li: ({ children }: ComponentType) => (
-            <li className='leading-7'>{children}</li>
+            <li className='leading-7 pl-2 marker:text-gray-400 [&>strong]:mt-0 [&>strong]:inline'>{children}</li>
           ),
           blockquote: ({ children }: ComponentType) => (
             <blockquote
-              className={`border-gray-700/50 italic mb-4 ${direction === 'rtl' ? 'text-right border-r-4 pr-4' : 'border-l-4 pl-4'
+              className={`border-gray-700/50 italic my-6 ${direction === 'rtl' ? 'text-right border-r-4 pr-6' : 'border-l-4 pl-6'
                 }`}
             >
               {children}
@@ -83,9 +81,9 @@ function SummaryContent({ text }: SummaryContentProps) {
             const index = btoa(codeContent).substring(0, 10);
 
             return (
-              <div className='relative group'>
+              <div className='relative group my-6'>
                 <pre
-                  className={`rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-4 mb-4 overflow-x-auto md:text-left md:ltr`}
+                  className={`rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-5 overflow-x-auto md:text-left md:ltr`}
                 >
                   <code className={`font-mono text-sm ${languageClass}`}>
                     {codeContent}
@@ -93,7 +91,7 @@ function SummaryContent({ text }: SummaryContentProps) {
                 </pre>
                 <button
                   onClick={() => handleCopyCode(codeContent, index)}
-                  className='absolute top-3 right-3 px-2 py-1 text-xs rounded bg-gray-700/50 text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer'
+                  className='absolute top-4 right-4 px-2.5 py-1.5 text-xs rounded bg-gray-700/50 text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer'
                 >
                   {copiedIndex === index ? 'Copied!' : 'Copy code'}
                 </button>
@@ -110,6 +108,9 @@ function SummaryContent({ text }: SummaryContentProps) {
             }
             return children;
           },
+          strong: ({ children }: ComponentType) => (
+            <strong className='font-semibold text-white'>{children}</strong>
+          ),
           a: ({ href, children }: ComponentType) => (
             <a
               href={href}
