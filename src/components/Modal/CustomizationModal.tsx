@@ -29,8 +29,8 @@ const formatOptions = [
 ];
 
 const modelOptions = [
-  { label: 'OpenAI', value: SummaryModel.OPENAI },
-  { label: 'DeepSeek', value: SummaryModel.DEEPSEEK },
+  { label: 'DeepSeek (DeepSeek-V3)', value: SummaryModel.DEEPSEEK },
+  { label: 'OpenAI (GPT-4o)', value: SummaryModel.OPENAI },
 ];
 
 const speedOptions = [
@@ -145,11 +145,11 @@ function CustomizationModal({
       <div className='flex flex-col gap-7'>
         {/* Model */}
         <Select
-          label='Model'
+          label='AI Model'
           options={modelOptions}
           value={model}
           onChange={handleModelChange}
-          description="Select the AI model to generate your summary"
+          description="Select the AI model to generate your summary."
         />
 
         {/* Language */}
