@@ -1,9 +1,8 @@
 import getApiBaseUrl from '@/util/getApiBaseUrl';
 import { Logger } from '@/util/logger';
-import axios from 'axios';
 import { SummaryModel } from '@/api/enums/api.enums';
 import { summaryRequest } from './types/api';
-
+import axios from 'axios';
 const log = Logger();
 
 const createAxiosInstance = (contentType = 'application/json') => {

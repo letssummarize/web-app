@@ -30,9 +30,9 @@ const Button = ({
     'border border-gray-700/50 hover:border-gray-700/70 hover:bg-gray-700/10',
     radius === 'default' && 'rounded-lg',
     radius === 'full' && 'rounded-full',
-    size === 'sm' && 'px-3 py-1.5 text-sm',
-    size === 'md' && 'px-4 py-2',
-    size === 'lg' && 'px-6 py-3 text-lg',
+    size === 'sm' && 'px-3 py-1.5 text-sm ',
+    size === 'md' && 'px-4 py-2 max-sm:px-3 max-sm:py-1.5 max-sm:text-sm',
+    size === 'lg' && 'px-6 py-3 text-lg max-sm:px-3 max-sm:py-2 max-sm:text-sm',
     disabled && 'opacity-50 cursor-not-allowed',
     className,
   ]

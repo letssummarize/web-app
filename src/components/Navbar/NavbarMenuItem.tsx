@@ -6,12 +6,14 @@ export interface NavbarMenuItemProps {
   name: string;
   href: string;
   icon?: IconName;
+  onClick?: ()=> void;
+
 }
 
-function NavbarMenuItem({ name, href, icon }: NavbarMenuItemProps) {
+function NavbarMenuItem({ name, href, icon, onClick }: NavbarMenuItemProps) {
   return (
-    <li className='flex items-center cursor-pointer'>
-      <Link href={href} className='flex items-center space-x-2'>
+    <li className='flex items-center cursor-pointer' onClick={onClick}>
+      <Link href={href} className='flex items-center space-x-2' onClick={onClick}>
         {icon && (
           <Icon icon={icon} props={{ className: 'w-5 h-auto opacity-80' }} />
         )}

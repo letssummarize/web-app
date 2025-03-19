@@ -26,7 +26,7 @@ function UrlInput({ url, setUrl, allowOnlyYoutube = true }: UrlInputProps) {
       value={url}
       onChange={handleChange}
       placeholder={allowOnlyYoutube ? 'Enter YouTube Video URL' : 'Enter URL'}
-      className={`w-full pl-10 py-6 bg-transparent text-white font-light placeholder-gray-300 focus:outline-none ${
+      className={`w-full pl-10 py-6 bg-transparent text-white font-light placeholder-gray-300 focus:outline-none max-sm:pl-6 max-sm:py-4 placeholder:text-lg max-sm:placeholder:text-[12px] ${
         !checkUrl(url) && url ? 'border-red-500' : ''
       }`}
     />
