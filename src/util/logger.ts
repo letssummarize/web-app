@@ -15,24 +15,27 @@
  * log.warn('Warning message');
  * log.error('Error occurred', new Error('Something went wrong'));
  */
+
+type LogArg = string | number | boolean | null | undefined | Error | Record<string, unknown> | unknown;
+
 export function Logger(): LoggerType {
   return {
-    debug: (message: string, ...args: any[]) => {
+    debug: (message: string, ...args: LogArg[]) => {
       if (isLoggingEnabled()) {
         console.debug(`🐛 DEBUG: ${message}`, ...args);
       }
     },
-    info: (message: string, ...args: any[]) => {
+    info: (message: string, ...args: LogArg[]) => {
       if (isLoggingEnabled()) {
         console.info(`ℹ️ INFO: ${message}`, ...args);
       }
     },
-    warn: (message: string, ...args: any[]) => {
+    warn: (message: string, ...args: LogArg[]) => {
       if (isLoggingEnabled()) {
         console.warn(`⚠️ WARN: ${message}`, ...args);
       }
     },
-    error: (message: string, ...args: any[]) => {
+    error: (message: string, ...args: LogArg[]) => {
       if (isLoggingEnabled()) {
         console.error(`❌ ERROR: ${message}`, ...args);
       }
@@ -53,8 +56,8 @@ export function isLoggingEnabled(): boolean {
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 interface LoggerType {
-  debug: (message: string, ...args: any[]) => void;
-  info: (message: string, ...args: any[]) => void;
-  warn: (message: string, ...args: any[]) => void;
-  error: (message: string, ...args: any[]) => void;
+  debug: (message: string, ...args: LogArg[]) => void;
+  info: (message: string, ...args: LogArg[]) => void;
+  warn: (message: string, ...args: LogArg[]) => void;
+  error: (message: string, ...args: LogArg[]) => void;
 }

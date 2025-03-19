@@ -6,7 +6,7 @@ const log = Logger();
 export function clearLocalStorage(): void {
   if (typeof window !== 'undefined') {
     try {
-      localStorage.removeItem(getLocalStorageKeys().SUMMARY);
+      localStorage.removeItem(getLocalStorageKeys().DATA);
       localStorage.removeItem(getLocalStorageKeys().OPTIONS);
       localStorage.removeItem(getLocalStorageKeys().SOURCE_CONTENT);
       log.info('Cleared all localStorage items');

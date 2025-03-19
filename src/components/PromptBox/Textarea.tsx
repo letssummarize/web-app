@@ -12,9 +12,7 @@ function Textarea({ value, onChange }: TextareaProps) {
       className={`w-full pl-4 py-4 h-[130px] bg-transparent text-white font-light placeholder-gray-300 focus:outline-none resize-none`}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-    >
-      {value}
-    </textarea>
+    />
   );
 }
 

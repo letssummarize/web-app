@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { navbarData } from "@/data/navbar";
 import Container from "../Container";
 import Logo from "../Logo";

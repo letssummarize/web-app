@@ -3,6 +3,10 @@ import { Logger } from './logger';
 
 const log = Logger();
 
+type PotentialSummaryInput = string | Partial<SummaryResponse> | {
+  summary?: string | Record<string, unknown>;
+} | null;
+
 /**
  * Validates and normalizes a summary response to ensure it conforms to the SummaryResponse type
  *
@@ -15,7 +19,7 @@ const log = Logger();
  * @param response - The response object or string to validate
  * @returns A properly formatted SummaryResponse object
  */
-export function isSummaryResponseValid(response: any): SummaryResponse {
+export function isSummaryResponseValid(response: PotentialSummaryInput): SummaryResponse {
   log.info('Validating summary response:', response);
 
   if (typeof response === 'string') {
@@ -29,8 +33,7 @@ export function isSummaryResponseValid(response: any): SummaryResponse {
     if (typeof response.summary === 'object' && response.summary !== null) {
       return { ...response, summary: JSON.stringify(response.summary) };
     }
-    return { summary: JSON.stringify(response) };
   }
 
-  return { summary: String(response) };
+  throw new Error('Invalid summary response format');
 }

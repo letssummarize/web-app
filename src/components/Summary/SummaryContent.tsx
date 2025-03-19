@@ -1,19 +1,11 @@
 import Text from '../Typography/Text';
 import ReactMarkdown from 'react-markdown';
 import { useState, useCallback } from 'react';
-import type { ReactNode } from 'react';
 import { containArabicText } from '@/util/containArabicText';
 
 interface SummaryContentProps {
   text: string;
 }
-
-type ComponentType = {
-  children?: ReactNode;
-  node?: any;
-  className?: string;
-  [key: string]: any;
-};
 
 interface CodeElementProps {
   children: string;
@@ -44,28 +36,28 @@ function SummaryContent({ text }: SummaryContentProps) {
     >
       <ReactMarkdown
         components={{
-          h1: ({ children }: ComponentType) => (
+          h1: ({ children }) => (
             <Text className='text-3xl font-bold mb-8'>{children}</Text>
           ),
-          h2: ({ children }: ComponentType) => (
+          h2: ({ children }) => (
             <Text className='text-2xl font-bold mb-6 mt-8'>{children}</Text>
           ),
-          h3: ({ children }: ComponentType) => (
+          h3: ({ children }) => (
             <Text className='text-xl font-bold mb-5 mt-6'>{children}</Text>
           ),
-          p: ({ children }: ComponentType) => (
+          p: ({ children }) => (
             <Text className='leading-8 mb-5'>{children}</Text>
           ),
-          ul: ({ children }: ComponentType) => (
+          ul: ({ children }) => (
             <ul className='list-disc pl-6 mb-6 space-y-3'>{children}</ul>
           ),
-          ol: ({ children }: ComponentType) => (
+          ol: ({ children }) => (
             <ol className='list-decimal pl-6 mb-6 space-y-3'>{children}</ol>
           ),
-          li: ({ children }: ComponentType) => (
+          li: ({ children }) => (
             <li className='leading-7 pl-2 marker:text-gray-400 [&>strong]:mt-0 [&>strong]:inline'>{children}</li>
           ),
-          blockquote: ({ children }: ComponentType) => (
+          blockquote: ({ children }) => (
             <blockquote
               className={`border-gray-700/50 italic my-6 ${direction === 'rtl' ? 'text-right border-r-4 pr-6' : 'border-l-4 pl-6'
                 }`}
@@ -73,7 +65,7 @@ function SummaryContent({ text }: SummaryContentProps) {
               {children}
             </blockquote>
           ),
-          pre: ({ children }: ComponentType) => {
+          pre: ({ children }) => {
             const codeElement =
               children as React.ReactElement<CodeElementProps>;
             const codeContent = codeElement?.props?.children || '';
@@ -98,20 +90,13 @@ function SummaryContent({ text }: SummaryContentProps) {
               </div>
             );
           },
-          code: ({ inline, children }: ComponentType) => {
-            if (inline) {
-              return (
-                <code className='font-mono text-sm bg-gray-700/30 px-1 py-0.5 rounded'>
-                  {children}
-                </code>
-              );
-            }
+          code: ({ children }) => {
             return children;
           },
-          strong: ({ children }: ComponentType) => (
+          strong: ({ children }) => (
             <strong className='font-semibold text-white'>{children}</strong>
           ),
-          a: ({ href, children }: ComponentType) => (
+          a: ({ href, children }) => (
             <a
               href={href}
               className='text-blue-400 hover:text-blue-300 underline'

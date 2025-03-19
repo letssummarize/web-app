@@ -7,7 +7,6 @@ import SummaryContent from '@/components/Summary/SummaryContent';
 import SummaryFooter from '@/components/Summary/SummaryFooter';
 import VideoThumbnail from '@/components/Summary/VideoThumbnail';
 import TextThumbnail from '@/components/Summary/TextThumbnail';
-import Heading from '@/components/Typography/Heading';
 import { useSummary } from '@/hooks/useSummary';
 import { getFullAudioFilePath } from '@/util/getFullAudioFilePath';
 import { getPromptBoxType } from '@/util/getPromptBoxType';
@@ -51,15 +50,12 @@ export default function SummaryResultPage() {
         {sourceContent?.type === 'text' && (
           <TextThumbnail
             content={sourceContent.content}
-            wordCount={sourceContent.content.split(/\s+/).length}
           />
         )}
 
         {sourceContent?.type === 'document' && (
           <DocumentThumbnail
             title={sourceContent.fileName || 'Document.pdf'}
-            pageCount={sourceContent.content.split('\n').length}
-            fileSize={`${Math.round(sourceContent.content.length / 1024)} KB`}
           />
         )}
 

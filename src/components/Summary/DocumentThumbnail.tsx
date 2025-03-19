@@ -5,11 +5,9 @@ import Icon from '../Icon/Icon';
 
 interface DocumentThumbnailProps {
   title: string;
-  pageCount?: number;
-  fileSize?: string;
 }
 
-function DocumentThumbnail({ title, pageCount, fileSize }: DocumentThumbnailProps) {
+function DocumentThumbnail({ title }: DocumentThumbnailProps) {
   if (!title) {
     return null;
   }
@@ -21,7 +19,7 @@ function DocumentThumbnail({ title, pageCount, fileSize }: DocumentThumbnailProp
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-4'>
           <Icon icon="document" props={{ className: 'w-8 h-auto text-white/50' }} />
-          <Text><span className='font-medium'>{title}</span></Text>
+            <Text><span className='font-medium'>{title}</span></Text>
         </div>
       </div>
     </div>

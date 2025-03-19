@@ -4,7 +4,6 @@ import './globals.css';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer';
-import { appMetaData } from '@/data/appMetadata';
 import { SummaryProvider } from '@/context/SummaryProvider';
 
 const poppins = Poppins({
@@ -57,9 +56,6 @@ export const metadata: Metadata = {
       alt: "Let's Summarize - AI Content Summarization"
     }]
   },
-  themeColor: '#161616',
-  category: 'technology',
-  applicationName: "Let's Summarize",
 };
 
 export default function RootLayout({

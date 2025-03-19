@@ -8,8 +8,6 @@ interface ReadAloudButtonProps {
 }
 
 function ReadAloudButton({ audioUrl }: ReadAloudButtonProps) {
-  if (!audioUrl) return null;
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,13 +33,19 @@ function ReadAloudButton({ audioUrl }: ReadAloudButtonProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ' ' && isPlaying && audioRef.current) {
         event.preventDefault();
-        audioRef.current.paused ? audioRef.current.play() : audioRef.current.pause();
+        if (audioRef.current.paused) {
+          audioRef.current.play();
+        } else {
+          audioRef.current.pause();
+        }
         setIsPlaying(!isPlaying);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [audioUrl, isPlaying]);
+
+  if (!audioUrl) return null;
 
   const togglePlayback = async () => {
     if (!audioUrl || !audioRef.current) return;

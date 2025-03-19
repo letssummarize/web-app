@@ -62,14 +62,11 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
     if (hasLoadedFromStorage) return;
 
     try {
-      let hasLoadedAny = false;
-
       const savedSummary = localStorage.getItem(LOCAL_STORAGE_KEYS.DATA);
       if (savedSummary) {
         try {
           const parsedSummary = JSON.parse(savedSummary);
           setData(parsedSummary);
-          hasLoadedAny = true;
         } catch (parseErr) {
           log.error('Failed to parse data from localStorage:', parseErr);
           localStorage.removeItem(LOCAL_STORAGE_KEYS.DATA);
@@ -81,7 +78,6 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
         try {
           const parsedOptions = JSON.parse(savedOptions);
           setOptions(parsedOptions);
-          hasLoadedAny = true;
         } catch (parseErr) {
           log.error('Failed to parse options from localStorage:', parseErr);
           localStorage.removeItem(LOCAL_STORAGE_KEYS.OPTIONS);
@@ -95,7 +91,6 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
         try {
           const parsedSourceContent = JSON.parse(savedSourceContent);
           setSourceContent(parsedSourceContent);
-          hasLoadedAny = true;
         } catch (parseErr) {
           log.error(
             'Failed to parse source content from localStorage:',
@@ -157,13 +152,9 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setData(isSummaryResponseValid(result));
 
       router.push('/prompt/result');
-    } catch (err: any) {
+    } catch (err) {
       log.error('YouTube summarization failed', err);
-      setError(
-        err.response?.data?.message ||
-          err.message ||
-          'Failed to summarize video'
-      );
+      setError(err instanceof Error ? err.message : 'Failed to summarize video');
     } finally {
       setIsLoading(false);
     }
@@ -189,11 +180,9 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setData(isSummaryResponseValid(result));
 
       router.push('/prompt/result');
-    } catch (err: any) {
+    } catch (err) {
       log.error('Text summarization failed', err);
-      setError(
-        err.response?.data?.message || err.message || 'Failed to summarize text'
-      );
+      setError(err instanceof Error ? err.message : 'Failed to summarize text');
     } finally {
       setIsLoading(false);
     }
@@ -228,11 +217,9 @@ export const SummaryProvider = ({ children }: { children: ReactNode }) => {
       setData(isSummaryResponseValid(result));
       
       router.push('/prompt/result');
-    } catch (err: any) {
+    } catch (err) {
       log.error('File summarization failed', err);
-      setError(
-        err.response?.data?.message || err.message || 'Failed to summarize file'
-      );
+      setError(err instanceof Error ? err.message : 'Failed to summarize file');
     } finally {
       setIsLoading(false);
     }

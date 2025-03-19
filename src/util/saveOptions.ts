@@ -1,6 +1,6 @@
 import { SummaryOptions } from '@/api/types/api';
 import { Logger } from './logger';
-import { getLocalStorageKeys, LocalStorageKeys } from './getLocalStorageKeys';
+import { getLocalStorageKeys } from './getLocalStorageKeys';
 
 const log = Logger();
 

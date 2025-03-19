@@ -3,17 +3,13 @@
 import { useState } from 'react';
 import Text from '../Typography/Text';
 import TextIcon from '../Icon/Text';
-import Heading from '../Typography/Heading';
 import ChevronDown from '../Icon/ChevronDown';
-import WordCount from '../WordCount';
 
 interface TextThumbnailProps {
   content: string;
-  title?: string;
-  wordCount?: number;
 }
 
-function TextThumbnail({ content, title, wordCount }: TextThumbnailProps) {
+function TextThumbnail({ content }: TextThumbnailProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!content) {
