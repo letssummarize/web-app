@@ -2,6 +2,7 @@ import Text from '../Typography/Text';
 import ReactMarkdown from 'react-markdown';
 import { useState, useCallback } from 'react';
 import { containArabicText } from '@/util/containArabicText';
+import remarkGfm from 'remark-gfm';
 
 interface SummaryContentProps {
   text: string;
@@ -35,6 +36,7 @@ function SummaryContent({ text }: SummaryContentProps) {
       }}
     >
       <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
             <Text className='text-3xl font-bold mb-8'>{children}</Text>
@@ -45,8 +47,32 @@ function SummaryContent({ text }: SummaryContentProps) {
           h3: ({ children }) => (
             <Text className='text-xl font-bold mb-5 mt-6'>{children}</Text>
           ),
+          table: ({ children }) => (
+            <div className="overflow-x-auto my-6"> 
+              <div className="rounded-[15px] border border-gray-600/30">
+                <table className="table-auto min-w-full border-collapse border-spacing-0">
+                  {children}
+                </table>
+              </div>
+            </div>
+          ),
+          thead: ({ children }) => (
+            <thead className="bg-gray-700/20">
+              {children}
+            </thead>
+          ),
+          th: ({ children }) => (
+            <th className="px-4 py-2 text-left font-semibold border-b border-gray-600/30 first:rounded-tl-lg last:rounded-tr-lg">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="px-4 py-2 border-b border-gray-600/30 last:border-none font-light">
+              {children}
+            </td>
+          ),
           p: ({ children }) => (
-            <Text className='leading-8 mb-5'>{children}</Text>
+            <Text className='leading-8 mb-5'><span className='font-light'>{children}</span></Text>
           ),
           ul: ({ children }) => (
             <ul className='list-disc pl-6 mb-6 space-y-3'>{children}</ul>
@@ -75,7 +101,7 @@ function SummaryContent({ text }: SummaryContentProps) {
             return (
               <div className='relative group my-6'>
                 <pre
-                  className={`rounded font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-5 overflow-x-auto md:text-left md:ltr`}
+                  className={`rounded-[15px] font-mono bg-gray-700/20 text-gray-300 text-sm border border-gray-600/30 p-5 overflow-x-auto md:text-left md:ltr`}
                 >
                   <code className={`font-mono text-sm ${languageClass}`}>
                     {codeContent}
