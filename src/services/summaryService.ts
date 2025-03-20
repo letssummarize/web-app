@@ -1,6 +1,7 @@
 import { SummaryOptions, SummaryResponse } from '@/api/types/api';
 import { axiosPrivate, axiosMultipart } from '../api/axios';
 import { Logger } from '@/util/logger';
+import { AxiosError } from 'axios';
 
 const log = Logger();
 
@@ -23,7 +24,8 @@ export const proceedSummarizeVideo = async (videoUrl: string, options?: SummaryO
     return response.data;
   } catch (error) {
     log.error('📹 Video summary error:', error);
-    throw error;
+    const axiosError = error as AxiosError<{ message: string }>;
+    throw axiosError.response?.data?.message || axiosError.message || 'An unexpected error occurred';
   }
 };
 
@@ -46,7 +48,8 @@ export const proceedSummarizeText = async (text: string, options?: SummaryOption
     return response.data;
   } catch (error) {
     log.error('📝 Text summary error:', error);
-    throw error;
+    const axiosError = error as AxiosError<{ message: string }>;
+    throw axiosError.response?.data?.message || axiosError.message || 'An unexpected error occurred';
   }
 };
 
@@ -74,7 +77,8 @@ export const proceedSummarizeDoc = async (file: File, options?: SummaryOptions):
     log.info('📄 File summary success:', response.data);
     return response.data;
   } catch (error) {
-    log.error('📄 File summary error:', error);
-    throw error;
+    log.error('📄 Document summary error:', error);
+    const axiosError = error as AxiosError<{ message: string }>;
+    throw axiosError.response?.data?.message || axiosError.message || 'An unexpected error occurred';
   }
 };
