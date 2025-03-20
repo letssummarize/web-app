@@ -28,13 +28,13 @@ export const navbarData: NavbarData = {
   secondaryMenu: [
     {
       name: 'API Documentation',
-      href: 'https://github.com/letssummarize/lets-summarize-api/tree/main/docs',
+      href: 'https://github.com/letssummarize/api/tree/main/docs',
       newTab: true,
       icon: 'api',
     },
     {
       name: 'GitHub',
-      href: 'https://github.com/letssummarize/lets-summarize-api',
+      href: 'https://github.com/letssummarize/api',
       newTab: true,
       icon: 'github',
     },

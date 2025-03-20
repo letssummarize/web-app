@@ -10,7 +10,7 @@ const Footer = () => {
         </span>
 
         <a
-          href='https://github.com/letssummarize/lets-summarize-api'
+          href='https://github.com/letssummarize/api'
           target='_blank'
           rel='noopener noreferrer'
           className='text-sm font-light flex items-center space-x-2 border-b pb-1'
