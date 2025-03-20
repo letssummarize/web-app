@@ -51,6 +51,7 @@ const lengthValueMap: Record<string, number> = {
 };
 
 const languageOptions = [
+  { label: 'Auto Detected', value: SummarizationLanguage.DEFAULT },
   { label: 'English', value: SummarizationLanguage.EN },
   { label: 'Arabic', value: SummarizationLanguage.AR },
 ];
@@ -130,7 +131,7 @@ function CustomizationModal({
       model: model,
       speed: speed,
       listen: listen,
-      lang: lang,
+      lang: lang === SummarizationLanguage.DEFAULT ? undefined : lang,
       customInstructions: isCustomInstructionsEnabled ? customInstructions : '',
     });
     onClose();

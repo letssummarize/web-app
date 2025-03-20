@@ -25,5 +25,5 @@ export enum SummarySpeed {
 export enum SummarizationLanguage {
   EN = 'english',
   AR = 'arabic',
-  DEFAULT = EN
+  DEFAULT = 'default'
 }
