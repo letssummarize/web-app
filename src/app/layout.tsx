@@ -68,19 +68,7 @@ export default function RootLayout({
       <body
         className={`${poppins.className} ${geistMono.variable} antialiased relative min-h-screen overflow-x-hidden`}
       >
-        <Image
-          src='/images/body-blur.png'
-          alt=''
-          aria-hidden='true'
-          className='absolute -top-[700px] left-1/2 -translate-x-1/2 -z-0 pointer-events-none opacity-80'
-          width={2000}
-          height={1000}
-        />
-        <div className='relative z-1 h-full flex flex-col space-y-[160px]'>
-          <Navbar />
-          <SummaryProvider>{children}</SummaryProvider>
-          <Footer />
-        </div>
+        <SummaryProvider>{children}</SummaryProvider>
       </body>
     </html>
   );

@@ -1,0 +1,32 @@
+import Endpoint from '@/components/MDX/Endpoint';
+import Button from '@/components/Button';
+
+# Welcome to MDX in Next.js! 🚀
+
+This page is built using **MDX**, allowing you to mix Markdown and React components.
+
+## Features:
+- ✅ Write Markdown 📝
+- ✅ Use JSX Components inside MDX 🏗️
+- ✅ Fully supported in Next.js!
+
+<Button>Click me!</Button>
+
+<Endpoint
+  method="POST"
+  path="/summarize/youtube"
+  description="Generate a summary from provided text content"
+  request={{
+    content: {
+      "youtubeUrl": "string"
+    },
+    options: {
+      model: "openai | deepseek",
+    }
+  }}
+  response={{
+    summary: "string",
+    model: "string",
+    processingTime: "number"
+  }}
+/>
