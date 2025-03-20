@@ -13,7 +13,7 @@
 
 ---
 
-## 📌 Prerequisites
+## Prerequisites
 
 Before running the application, ensure you have the following installed:
 
