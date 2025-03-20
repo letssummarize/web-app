@@ -18,6 +18,7 @@ interface PromptBoxProps {
   className?: string;
   type: PromptBoxType;
   value?: string;
+  shouldFocus?: boolean; 
 }
 
 function PromptBox({
@@ -27,6 +28,7 @@ function PromptBox({
   type,
   className,
   value = '',
+  shouldFocus = true
 }: PromptBoxProps) {
   const { options, setOptions } = useSummary();
   const [showCustomization, setShowCustomization] = useState(false);
@@ -68,8 +70,8 @@ function PromptBox({
                 : 'flex-col items-center'
               } gap-3 ${roundedClassName} ${type === 'upload' ? 'p-10' : ''}`}
           >
-            {type === 'url' && <UrlInput url={input} setUrl={setInput} />}
-            {type === 'text' && <Textarea value={input} onChange={setInput} />}
+            {type === 'url' && <UrlInput url={input} setUrl={setInput} shouldFocus={shouldFocus} />}
+            {type === 'text' && <Textarea value={input} onChange={setInput} shouldFocus={shouldFocus} />}
             {type === 'upload' && (
               <UploadBox onFileSelected={handleFileSelected} uploadedFile={uploadedFile} />
             )}
@@ -83,7 +85,9 @@ function PromptBox({
                 size={type === 'url' ? 'lg' : 'md'}
                 className={`${type === 'text' ? 'mr-2 mb-2' : type === 'url' ? 'mr-3' : ''
                   }`}
-              >Summarize</Button>
+              >
+                Summarize
+              </Button>
             )}
           </div>
         </div>

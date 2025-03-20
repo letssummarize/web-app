@@ -12,6 +12,7 @@ interface PromptSectionProps {
   value?: string;
   uploadedFile?: File | null;
   showHeading?: boolean;
+  shouldFocus?: boolean;
 }
 
 function PromptSection({
@@ -19,6 +20,7 @@ function PromptSection({
   value,
   uploadedFile,
   showHeading = true,
+  shouldFocus = true,
 }: PromptSectionProps) {
   const { summarizeVideo, summarizeText, summarizeDoc, isLoading, error } =
     useSummary();
@@ -59,6 +61,7 @@ function PromptSection({
           uploadedFile={uploadedFile}
           type={promptBoxType}
           value={value}
+          shouldFocus={true}
         />
       )}
 
