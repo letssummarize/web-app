@@ -45,11 +45,11 @@ Edit the `.env` file and update the required values:
 | Variable Name | Description | Required | Default Value |
 |--------------|-------------|----------|---------------|
 | `NEXT_PUBLIC_API_URL` | The API URL for Let's Summarize | ✅ Yes | `http://localhost:3000` |
-| `USE_API_DEFAULT_MODELS_API_KEYS` | Use default API model keys | ❌ No | `true` |
-| `NEXT_PUBLIC_OPENAI_API_KEY` | OpenAI API key for summarization. _(No need to provide this if `USE_API_DEFAULT_MODELS_API_KEYS` is true)_ | ✅ Yes | `your_openai_api_key_here` |
-| `NEXT_PUBLIC_DEEPSEEK_API_KEY` | DeepSeek API key (if used) | ⚠️ Required only if `USE_API_DEFAULT_MODELS_API_KEYS` is false and `NEXT_PUBLIC_ENABLE_LOGGING` is not provided | `your_deepseek_api_key_here` |
-| `NEXT_PUBLIC_ENABLE_LOGGING` | Enable application logging | ⚠️ Required only if `USE_API_DEFAULT_MODELS_API_KEYS` is false and `NEXT_PUBLIC_DEEPSEEK_API_KEY` is not provided | (empty) |
-| `NEXT_PUBLIC_AUDIO_URL` | Audio processing URL if the API you used uses local storage | ✅ Yes | `http://localhost:3000` |
+| `USE_API_DEFAULT_MODELS_API_KEYS` | Use default API model keys (OpenAI and DeepSeek keys) this mean you will not need to add vaues for `NEXT_PUBLIC_OPENAI_API_KEY` & `NEXT_PUBLIC_DEEPSEEK_API_KEY` | ❌ No | `true` |
+| `NEXT_PUBLIC_OPENAI_API_KEY` | OpenAI API key for summarization. _(No need to provide this if `USE_API_DEFAULT_MODELS_API_KEYS` is true)_ | ⚠️ Required only if `USE_API_DEFAULT_MODELS_API_KEYS` is false and `NEXT_PUBLIC_DEEPSEEK_API_KEY` is not provided | (empty) | ❌ No |
+| `NEXT_PUBLIC_DEEPSEEK_API_KEY` | DeepSeek API key (if used) | ⚠️ Required only if `USE_API_DEFAULT_MODELS_API_KEYS` is false and `NEXT_PUBLIC_OPENAI_API_KEY` is not provided | (empty) |
+| `NEXT_PUBLIC_ENABLE_LOGGING` | Enable application logging | ❌ No | false |
+| `NEXT_PUBLIC_AUDIO_URL` | Audio processing URL if the API you used uses local storage no S3 for storage | ✅ Yes | `http://localhost:3000` |
 
 > ⚠️ **Important:**  
 > The `NEXT_PUBLIC_API_URL` is **required**. Without a valid API URL, the application's functionalities **will not work**.  
