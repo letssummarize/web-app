@@ -37,10 +37,12 @@ const modelOptions = isFreeUser() ? [
   { label: 'OpenAI', value: SummaryModel.OPENAI },
 ];
 
-const speedOptions = [
-  { label: 'Fast', value: SummarySpeed.FAST },
-  { label: 'Slow', value: SummarySpeed.SLOW },
-];
+const speedOptions = isFreeUser()
+  ? [{ label: 'Fast', value: SummarySpeed.FAST }]
+  : [
+    { label: 'Fast', value: SummarySpeed.FAST },
+    { label: 'Slow', value: SummarySpeed.SLOW },
+  ];
 
 const lengthMap: Record<number, SummaryLength> = {
   0: SummaryLength.SHORT,
@@ -74,12 +76,14 @@ function CustomizationModal({
     options.customInstructions ? undefined : (options.format || SummaryFormat.DEFAULT)
   );
   const [model, setModel] = useState<SummaryModel>(
-    options.model || SummaryModel.DEFAULT
+    isFreeUser() ? SummaryModel.GEMINI : (options.model || SummaryModel.DEFAULT)
   );
   const [speed, setSpeed] = useState<SummarySpeed>(
-    options.speed || SummarySpeed.DEFAULT
+    isFreeUser() ? SummarySpeed.FAST : (options.speed || SummarySpeed.DEFAULT)
   );
-  const [listen, setListen] = useState<boolean>(options.listen || false);
+  const [listen, setListen] = useState<boolean>(
+    isFreeUser() ? false : (options.listen || false)
+  );
   const [lang, setLang] = useState<SummarizationLanguage>(
     options.lang || SummarizationLanguage.DEFAULT
   );
@@ -94,14 +98,17 @@ function CustomizationModal({
   };
 
   const handleModelChange = (value: string) => {
+    if (isFreeUser()) return;
     setModel(value as SummaryModel);
   };
 
   const handleSpeedChange = (value: string) => {
+    if (isFreeUser() && value === SummarySpeed.SLOW) return;
     setSpeed(value as SummarySpeed);
   };
 
   const handleListenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isFreeUser()) return;
     setListen(event.target.checked);
   };
 
@@ -132,9 +139,9 @@ function CustomizationModal({
     onSave({
       length: isCustomInstructionsEnabled ? undefined : (length !== undefined ? lengthMap[length] : undefined),
       format: isCustomInstructionsEnabled ? undefined : format,
-      model: model,
-      speed: speed,
-      listen: listen,
+      model: isFreeUser() ? SummaryModel.GEMINI : model,
+      speed: isFreeUser() ? SummarySpeed.FAST : speed,
+      listen: isFreeUser() ? false : listen,
       lang: lang === SummarizationLanguage.DEFAULT ? undefined : lang,
       customInstructions: isCustomInstructionsEnabled ? customInstructions : '',
     });
@@ -154,7 +161,11 @@ function CustomizationModal({
           options={modelOptions}
           value={model}
           onChange={handleModelChange}
-          description={isFreeUser() ? 'Select the AI model to generate your summary. <span class="font-semibold text-red-400">The models Deepseek-v3 and GPT-4o are not available for free users. Please upgrade to access these models (Coming Soon)</span>' : 'Select the AI model to generate your summary.'}
+          disabled={isFreeUser()}
+          description={isFreeUser()
+            ? 'Free users can only use the Gemini model. <span class="text-red-400">Advanced models like Deepseek and GPT-4o are reserved for premium users. Upgrade coming soon.</span>'
+            : 'Select the AI model to generate your summary.'
+          }
         />
 
         {/* Language */}
@@ -173,7 +184,7 @@ function CustomizationModal({
           checked={isCustomInstructionsEnabled}
           onChange={handleEnableCustomInstructionsChange}
           label='Enable custom instructions'
-          description='Use your own instructions instead of the predefined format and length options'
+          description="Use your own instructions instead of the predefined format and length options. Enabling this will disable Format and Length settings."
         />
 
         {/* Custom Instructions Input */}
@@ -184,7 +195,11 @@ function CustomizationModal({
           disabled={!isCustomInstructionsEnabled}
           maxLength={200}
           label="Custom Instructions"
-          description="Provide specific instructions for how you want the content to be summarized."
+          description={
+            isCustomInstructionsEnabled
+              ? 'Provide specific instructions for how you want the content to be summarized.'
+              : '<span class="text-yellow-400">This field is disabled. Enable custom instructions above to write your own summarization instructions.</span>'
+          }
         />
 
         <Divider />
@@ -198,7 +213,10 @@ function CustomizationModal({
           onChange={setLength}
           labels={['Brief', 'Standard', 'Comprehensive']}
           disabled={isCustomInstructionsEnabled}
-          description="Choose how detailed you want your summary to be"
+          description={isCustomInstructionsEnabled
+            ? '<span class="text-yellow-400">Summary length is disabled because custom instructions are enabled.</span>'
+            : 'Choose how detailed you want your summary to be.'
+          }
         />
 
         {/* Format */}
@@ -208,7 +226,11 @@ function CustomizationModal({
           value={format}
           onChange={handleFormatChange}
           disabled={isCustomInstructionsEnabled}
-          description="Choose how your summary should be structured"
+          description={
+            isCustomInstructionsEnabled
+              ? '<span class="text-yellow-400">Summary format is disabled because custom instructions are enabled.</span>'
+              : 'Choose how your summary should be structured.'
+          }
         />
 
         <Divider />
@@ -219,7 +241,11 @@ function CustomizationModal({
           options={speedOptions}
           value={speed}
           onChange={handleSpeedChange}
-          description="Fast mode responds quicker but with slight inaccuracy, slow mode takes longer but is more precise"
+          disabled={isFreeUser()}
+          description={isFreeUser()
+            ? '<span class="text-red-400">Only Fast mode is available for free users. Slow mode provides more accurate summaries but is reserved for premium users (Coming Soon).</span>'
+            : 'Fast mode responds quicker but may be less accurate. Slow mode takes longer but improves summary precision.'
+          }
         />
 
         <Divider />
@@ -229,7 +255,11 @@ function CustomizationModal({
           checked={listen}
           onChange={handleListenChange}
           label='Enable text-to-speech'
-          description='Have your summary read aloud to you'
+          disabled={isFreeUser()}
+          description={isFreeUser()
+            ? '<span class="text-red-400">Text-to-speech is a premium feature. Upgrade to listen to your summaries (Coming Soon).</span>'
+            : 'Have your summary read aloud to you.'
+          }
         />
       </div>
     </Modal>
