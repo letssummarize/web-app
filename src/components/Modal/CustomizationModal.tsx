@@ -15,6 +15,7 @@ import {
 import Textarea from '../Textarea';
 import Checkbox from '../Checkbox';
 import Divider from '../Divider';
+import { isFreeUser } from '@/util/isFreeUser';
 
 interface CustomizationModalProps {
   options: SummaryOptions;
@@ -28,10 +29,12 @@ const formatOptions = [
   { label: 'Bullet points', value: SummaryFormat.BULLET_POINTS },
 ];
 
-const modelOptions = [
-  { label: 'gemini-2.0-flash (Gemini)', value: SummaryModel.GEMINI },
-  { label: 'DeepSeek-V3 (DeepSeek)', value: SummaryModel.DEEPSEEK },
-  { label: 'GPT-4o (OpenAI)', value: SummaryModel.OPENAI },
+const modelOptions = isFreeUser() ? [
+  { label: 'Gemini', value: SummaryModel.GEMINI },
+] : [
+  { label: 'Gemini', value: SummaryModel.GEMINI },
+  { label: 'Deepseek', value: SummaryModel.DEEPSEEK },
+  { label: 'OpenAI', value: SummaryModel.OPENAI },
 ];
 
 const speedOptions = [
@@ -63,8 +66,8 @@ function CustomizationModal({
   onClose,
 }: CustomizationModalProps) {
   const [length, setLength] = useState(
-    options.customInstructions 
-      ? undefined 
+    options.customInstructions
+      ? undefined
       : (options.length ? lengthValueMap[options.length] : 1)
   );
   const [format, setFormat] = useState<SummaryFormat | undefined>(
@@ -151,7 +154,7 @@ function CustomizationModal({
           options={modelOptions}
           value={model}
           onChange={handleModelChange}
-          description="Select the AI model to generate your summary."
+          description={isFreeUser() ? 'Select the AI model to generate your summary. <span class="font-semibold text-red-400">The models Deepseek-v3 and GPT-4o are not available for free users. Please upgrade to access these models (Coming Soon)</span>' : 'Select the AI model to generate your summary.'}
         />
 
         {/* Language */}

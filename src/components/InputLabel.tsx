@@ -10,7 +10,10 @@ function InputLabel({ label, description }: LabelProps) {
         <label className="text-white text-sm font-medium">{label}</label>
       )}
       {description && (
-        <p className="text-gray-400 text-xs">{description}</p>
+        <p
+          className="text-gray-400 text-xs"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
       )}
     </div>
   )
