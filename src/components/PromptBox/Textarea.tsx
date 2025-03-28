@@ -1,19 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 
 interface TextareaProps {
   value: string;
   onChange: Dispatch<SetStateAction<string>>;
-  shouldFocus?: boolean;
 }
 
-function Textarea({ value, onChange, shouldFocus = true }: TextareaProps) {
+function Textarea({ value, onChange }: TextareaProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (shouldFocus && textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  }, [shouldFocus]);
 
   return (
     <textarea

@@ -6,11 +6,9 @@ interface UrlInputProps {
   url: string;
   setUrl: (url: string) => void;
   allowOnlyYoutube?: boolean;
-  shouldFocus?: boolean;
-
 }
 
-function UrlInput({ url, setUrl, allowOnlyYoutube = true, shouldFocus = true }: UrlInputProps) {
+function UrlInput({ url, setUrl, allowOnlyYoutube = true }: UrlInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

@@ -2,8 +2,8 @@ interface EndpointProps {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   path: string;
   description: string;
-  request?: Record<string, any>;
-  response?: Record<string, any>;
+  request?: Record<string, unknown>;
+  response?: Record<string, unknown>;
 }
 
 function Endpoint({ method, path, description, request, response }: EndpointProps) {
