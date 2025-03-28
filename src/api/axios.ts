@@ -19,7 +19,11 @@ const createAxiosInstance = (contentType = 'application/json') => {
       const apiKey =
         model === SummaryModel.OPENAI
           ? process.env.NEXT_PUBLIC_OPENAI_API_KEY
-          : process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
+          : model === SummaryModel.DEEPSEEK
+            ? process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY
+            : model === SummaryModel.GEMINI
+              ? process.env.NEXT_PUBLIC_GEMINI_API_KEY
+              : null;
       log.info('model ', model);
       if (apiKey) {
         config.headers.Authorization = `Bearer ${apiKey}`;

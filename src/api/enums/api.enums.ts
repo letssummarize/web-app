@@ -13,7 +13,8 @@ export enum SummaryFormat {
 export enum SummaryModel {
   OPENAI = 'openai',
   DEEPSEEK = 'deepseek',
-  DEFAULT = DEEPSEEK,
+  GEMINI = 'gemini',
+  DEFAULT = GEMINI,
 }
 
 export enum SummarySpeed {

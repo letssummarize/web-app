@@ -29,8 +29,9 @@ const formatOptions = [
 ];
 
 const modelOptions = [
-  { label: 'DeepSeek (DeepSeek-V3)', value: SummaryModel.DEEPSEEK },
-  { label: 'OpenAI (GPT-4o)', value: SummaryModel.OPENAI },
+  { label: 'gemini-2.0-flash (Gemini)', value: SummaryModel.GEMINI },
+  { label: 'DeepSeek-V3 (DeepSeek)', value: SummaryModel.DEEPSEEK },
+  { label: 'GPT-4o (OpenAI)', value: SummaryModel.OPENAI },
 ];
 
 const speedOptions = [
