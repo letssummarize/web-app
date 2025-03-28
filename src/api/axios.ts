@@ -3,6 +3,7 @@ import { Logger } from '@/util/logger';
 import { SummaryModel } from '@/api/enums/api.enums';
 import { summaryRequest } from './types/api';
 import axios from 'axios';
+import { isFreeUser } from '@/util/isFreeUser';
 const log = Logger();
 
 const createAxiosInstance = (contentType = 'application/json') => {
@@ -15,16 +16,30 @@ const createAxiosInstance = (contentType = 'application/json') => {
   instance.interceptors.request.use(
     (config) => {
       const data = config.data as summaryRequest;
-      const model = data.options?.model || SummaryModel.DEFAULT;
+      let model = data.options?.model || SummaryModel.DEFAULT;
+
+      // Force Gemini model for free users
+      if (isFreeUser()) {
+        if (model === SummaryModel.OPENAI || model === SummaryModel.DEEPSEEK) {
+          throw new Error('Free users can only use the Gemini model.');
+        }
+        model = SummaryModel.GEMINI;
+        if (data.options) {
+          data.options.model = model;
+        }
+      }
+
       const apiKey =
         model === SummaryModel.OPENAI
           ? process.env.NEXT_PUBLIC_OPENAI_API_KEY
           : model === SummaryModel.DEEPSEEK
-            ? process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY
-            : model === SummaryModel.GEMINI
-              ? process.env.NEXT_PUBLIC_GEMINI_API_KEY
-              : null;
-      log.info('model ', model);
+          ? process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY
+          : model === SummaryModel.GEMINI
+          ? process.env.NEXT_PUBLIC_GEMINI_API_KEY
+          : null;
+
+      log.info('model', model);
+
       if (apiKey) {
         config.headers.Authorization = `Bearer ${apiKey}`;
       } else {
